@@ -7,6 +7,7 @@ import Register from "../pages/Authentication/Register/Register";
 import DashboardLayout from "../Layout/DashboardLayout";
 import Services from "../pages/Services/Services";
 import ServiceDetails from "../pages/Services/ServiceDetails";
+import Coverage from "../pages/Coverage/Coverage";
 
 const router = createBrowserRouter([
     {
@@ -25,7 +26,13 @@ const router = createBrowserRouter([
             {
                 path: 'services/:id',
                 Component: ServiceDetails
-            }
+            },
+            {
+                path: "coverage",
+                Component: Coverage,
+                loader: () => fetch('/serviceCenters.json').then(res => res.json())
+
+            },
         ]
     },
     {

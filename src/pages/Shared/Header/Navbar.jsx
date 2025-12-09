@@ -28,9 +28,10 @@ const Navbar = () => {
             {!user && <li><NavLink to='/register'>Register</NavLink></li>}
             <li><NavLink to='/dashboard'>Dashboard</NavLink></li>
             <li><NavLink to='/services'>All Services</NavLink></li>
+            <li><NavLink to='/coverage'>Coverage</NavLink></li>
         </>
     );
-
+ 
     return (
         <div>
             <div className="navbar bg-base-100 shadow-sm">
