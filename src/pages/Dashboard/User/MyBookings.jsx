@@ -3,6 +3,7 @@ import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import useAuth from '../../../hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
+import { Link } from 'react-router';
 
 const MyBookings = () => {
     const { user } = useAuth();
@@ -13,7 +14,9 @@ const MyBookings = () => {
     const { data, refetch } = useQuery({
         queryKey: ['bookings', user?.email, page],
         queryFn: async () => {
+            console.log("Fetching bookings for user:", user?.email);
             const res = await axiosSecure.get(`/bookings?page=${page}&limit=${limit}`);
+            console.log("Bookings response:", res.data);
             return res.data;
         }
     });
@@ -95,18 +98,19 @@ const MyBookings = () => {
                                         <li className={getStepClass(booking.status, 'paid')}>Paid</li>
                                     </ul>
                                 </td>
-                                <td>${booking.price}</td>
                                 <td>
                                     {booking.status === 'pending' && (
                                         <button
                                             onClick={() => handleCancel(booking._id)}
-                                            className="btn btn-sm btn-error text-white"
+                                            className="btn btn-sm btn-error text-white mr-2"
                                         >
                                             Cancel
                                         </button>
                                     )}
-                                    {(booking.status === 'confirmed' || booking.status === 'completed') && (
-                                        <button className="btn btn-sm btn-primary">Pay</button>
+                                    {booking.price && booking.status !== 'paid' && (
+                                        <Link to={`/dashboard/payment/${booking._id}`} state={{ booking: booking }}>
+                                            <button className="btn btn-sm btn-primary">Pay</button>
+                                        </Link>
                                     )}
                                 </td>
                             </tr>
@@ -143,7 +147,7 @@ const MyBookings = () => {
                     </button>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

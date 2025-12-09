@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import RootLayout from "../Layout/RootLayout";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Home from "../pages/Home/Home/Home";
 import AuthLayout from "../Layout/AuthLayout";
 import Login from "../pages/Authentication/Login/Login";
@@ -11,6 +12,9 @@ import Coverage from "../pages/Coverage/Coverage";
 import UserProfile from "../pages/Dashboard/User/UserProfile";
 import MyBookings from "../pages/Dashboard/User/MyBookings";
 import PaymentHistory from "../pages/Dashboard/User/PaymentHistory";
+import Payment from "../pages/Dashboard/User/Payment/Payment";
+import PaymentSuccess from "../pages/Dashboard/User/Payment/PaymentSuccess";
+import PaymentCanceled from "../pages/Dashboard/User/Payment/PaymentCanceled";
 import ManageDecorators from "../pages/Dashboard/Admin/ManageDecorators";
 import ManageServices from "../pages/Dashboard/Admin/ManageServices";
 import ManageBookings from "../pages/Dashboard/Admin/ManageBookings";
@@ -23,6 +27,7 @@ const router = createBrowserRouter([
     {
         path: '/',
         Component: RootLayout,
+        errorElement: <ErrorPage />,
         children: [
             {
                 index: true,
@@ -74,8 +79,20 @@ const router = createBrowserRouter([
                 Component: MyBookings
             },
             {
+                path: 'payment/:bookingId',
+                Component: Payment
+            },
+            {
                 path: 'payment-history',
                 Component: PaymentHistory
+            },
+            {
+                path: 'payment-success',
+                Component: PaymentSuccess
+            },
+            {
+                path: 'payment-canceled',
+                Component: PaymentCanceled
             },
 
             // Admin Routes
