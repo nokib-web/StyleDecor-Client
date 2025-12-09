@@ -8,6 +8,16 @@ import DashboardLayout from "../Layout/DashboardLayout";
 import Services from "../pages/Services/Services";
 import ServiceDetails from "../pages/Services/ServiceDetails";
 import Coverage from "../pages/Coverage/Coverage";
+import UserProfile from "../pages/Dashboard/User/UserProfile";
+import MyBookings from "../pages/Dashboard/User/MyBookings";
+import PaymentHistory from "../pages/Dashboard/User/PaymentHistory";
+import ManageDecorators from "../pages/Dashboard/Admin/ManageDecorators";
+import ManageServices from "../pages/Dashboard/Admin/ManageServices";
+import ManageBookings from "../pages/Dashboard/Admin/ManageBookings";
+import AdminAnalytics from "../pages/Dashboard/Admin/AdminAnalytics";
+import AssignedProjects from "../pages/Dashboard/Decorator/AssignedProjects";
+import DecoratorEarnings from "../pages/Dashboard/Decorator/DecoratorEarnings";
+
 
 const router = createBrowserRouter([
     {
@@ -53,9 +63,48 @@ const router = createBrowserRouter([
         path: '/dashboard',
         Component: DashboardLayout,
         children: [
+            // User Routes
             {
+                path: 'profile',
+                Component: UserProfile
+            },
 
-            }
+            {
+                path: 'bookings',
+                Component: MyBookings
+            },
+            {
+                path: 'payment-history',
+                Component: PaymentHistory
+            },
+
+            // Admin Routes
+            {
+                path: 'admin-home',
+                Component: AdminAnalytics
+            },
+            {
+                path: 'manage-users',
+                Component: ManageDecorators
+            },
+            {
+                path: 'manage-services',
+                Component: ManageServices
+            },
+            {
+                path: 'manage-bookings',
+                Component: ManageBookings
+            },
+
+            // Decorator Routes
+            {
+                path: 'assigned-projects',
+                Component: AssignedProjects
+            },
+            {
+                path: 'decorator-earnings',
+                Component: DecoratorEarnings
+            },
         ]
     }
 ]);

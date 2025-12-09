@@ -1,56 +1,73 @@
 import React from 'react';
-import { FaHome } from 'react-icons/fa';
-import { FiSettings } from 'react-icons/fi';
-import { Link, Outlet } from 'react-router';
+import { FaHome, FaUsers, FaCalendarAlt, FaChartPie, FaPaintBrush } from 'react-icons/fa';
+import { FiSettings, FiMenu } from 'react-icons/fi';
+import { MdOutlineMiscellaneousServices, MdPayment } from 'react-icons/md';
+import { Link, NavLink, Outlet } from 'react-router';
+import useRole from '../hooks/useRole';
 
 const DashboardLayout = () => {
+    const { role, loading } = useRole();
+
+    if (loading) {
+        return <div className="flex justify-center items-center h-screen"><span className="loading loading-spinner loading-lg"></span></div>;
+    }
+
+    const renderSidebarItems = () => {
+        if (role === 'admin') {
+            return (
+                <>
+                    <li><NavLink to="/dashboard/admin-home"><FaChartPie /> Analytics</NavLink></li>
+                    <li><NavLink to="/dashboard/manage-users"><FaUsers /> Manage Decorators</NavLink></li>
+                    <li><NavLink to="/dashboard/manage-services"><MdOutlineMiscellaneousServices /> Manage Services</NavLink></li>
+                    <li><NavLink to="/dashboard/manage-bookings"><FaCalendarAlt /> Manage Bookings</NavLink></li>
+                </>
+            );
+        } else if (role === 'decorator') {
+            return (
+                <>
+                    <li><NavLink to="/dashboard/assigned-projects"><FaPaintBrush /> Assigned Projects</NavLink></li>
+                    <li><NavLink to="/dashboard/decorator-earnings"><MdPayment /> Earnings</NavLink></li>
+                </>
+            );
+        } else {
+            // Default to User
+            return (
+                <>
+                    <li><NavLink to="/dashboard/profile"><FaHome /> Profile</NavLink></li>
+                    <li><NavLink to="/dashboard/bookings"><FaCalendarAlt /> My Bookings</NavLink></li>
+                    <li><NavLink to="/dashboard/payment-history"><MdPayment /> Payment History</NavLink></li>
+                </>
+            );
+        }
+    };
+
     return (
-        <div className='max-w-7xl mx-auto'>
-            <div className="drawer lg:drawer-open">
-                <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-                <div className="drawer-content">
-                    {/* Navbar */}
-                    <nav className="navbar w-full bg-base-300">
-                        <label htmlFor="my-drawer-4" aria-label="open sidebar" className="btn btn-square btn-ghost">
-                            {/* Sidebar toggle icon */}
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path><path d="M9 4v16"></path><path d="M14 10l2 2l-2 2"></path></svg>
+        <div className="drawer lg:drawer-open">
+            <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content flex flex-col p-4">
+                {/* Navbar for mobile */}
+                <div className="w-full navbar bg-base-100 lg:hidden">
+                    <div className="flex-none">
+                        <label htmlFor="my-drawer-2" className="btn btn-square btn-ghost">
+                            <FiMenu className="text-xl" />
                         </label>
-                        <div className="px-4">StyleDecor Dashboard</div>
-                    </nav>
-
-
-                    {/* Page content here */}
-                    <Outlet></Outlet>
-
-                    <div className="p-4">Page Content</div>
-                </div>
-
-                <div className="drawer-side is-drawer-close:overflow-visible">
-                    <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
-                    <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
-
-                        {/* Sidebar content here */}
-                        <ul className="menu w-full grow">
-                            {/* List item */}
-                            <li>
-                                <Link to='/' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Homepage">
-                                    {/* Home icon */}
-                                    <FaHome></FaHome>
-                                    <span className="is-drawer-close:hidden">Homepage</span>
-                                </Link>
-                            </li>
-
-                            {/* List item */}
-                            <li>
-                                <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Settings">
-                                    {/* Settings icon */}
-                                 <FiSettings></FiSettings>
-                                    <span className="is-drawer-close:hidden">Settings</span>
-                                </button>
-                            </li>
-                        </ul>
                     </div>
+                    <div className="flex-1 px-2 mx-2">StyleDecor Dashboard</div>
                 </div>
+
+                <Outlet></Outlet>
+            </div>
+            <div className="drawer-side">
+                <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
+                <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+                    {/* Sidebar content here */}
+                    <div className="mb-4 text-xl font-bold px-4">StyleDecor</div>
+
+                    {renderSidebarItems()}
+
+                    <div className="divider"></div>
+                    <li><Link to="/"><FaHome /> Home</Link></li>
+                </ul>
             </div>
         </div>
     );
