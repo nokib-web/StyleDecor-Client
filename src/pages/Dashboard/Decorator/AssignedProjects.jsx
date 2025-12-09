@@ -8,13 +8,15 @@ const AssignedProjects = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
 
-    const { data: bookings = [], refetch } = useQuery({
+    const { data: bookingsData = {}, refetch } = useQuery({
         queryKey: ['bookings-decorator', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/bookings?email=${user.email}`);
             return res.data;
         }
     });
+
+    const bookings = bookingsData.data || [];
 
     const handleStatusUpdate = (id, newStatus) => {
         axiosSecure.patch(`/bookings/${id}`, { status: newStatus })

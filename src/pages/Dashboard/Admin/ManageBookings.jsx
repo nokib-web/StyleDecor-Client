@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
+import React, {  } from 'react';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 
 const ManageBookings = () => {
     const axiosSecure = useAxiosSecure();
-    const [selectedDecorator, setSelectedDecorator] = useState('');
+    // const [selectedDecorator, setSelectedDecorator] = useState('');
 
-    const { data: bookings = [], refetch } = useQuery({
+    const { data: bookingsData = {}, refetch } = useQuery({
         queryKey: ['bookings-admin'],
         queryFn: async () => {
             const res = await axiosSecure.get('/bookings');
             return res.data;
         }
     });
+
+    const bookings = bookingsData.data || [];
 
     const { data: decorators = [] } = useQuery({
         queryKey: ['decorators'],
