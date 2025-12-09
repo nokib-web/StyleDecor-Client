@@ -1,3 +1,4 @@
+// src/contexts/AuthProvider.jsx
 import React, { useEffect, useState } from 'react';
 import AuthContext from './AuthContext';
 import {
@@ -12,30 +13,39 @@ import {
     sendEmailVerification
 } from 'firebase/auth';
 import { auth } from './firebase/firebase.config';
+import axios from 'axios';
 
 const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
-
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Register User
+    // Register User (firebase create)
     const registerUser = (email, password) => {
         setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password);
     };
 
-    // Sign In User
-    const signInUser = (email, password) => {
+    // Sign In User (email/password) and mint cookies
+    const signInUser = async (email, password) => {
         setLoading(true);
-        return signInWithEmailAndPassword(auth, email, password);
+        const result = await signInWithEmailAndPassword(auth, email, password);
+        const idToken = await result.user.getIdToken();
+        // Send to backend to mint cookies
+        await axios.post('http://localhost:5000/auth/firebase-login', { idToken }, { withCredentials: true });
+        setLoading(false);
+        return result;
     };
 
-    // Sign In with Google
-    const signInWithGoogle = () => {
+    // Sign In with Google + mint cookies
+    const signInWithGoogle = async () => {
         setLoading(true);
-        return signInWithPopup(auth, googleProvider);
+        const result = await signInWithPopup(auth, googleProvider);
+        const idToken = await result.user.getIdToken();
+        await axios.post('http://localhost:5000/auth/firebase-login', { idToken }, { withCredentials: true });
+        setLoading(false);
+        return result;
     };
 
     // Update User Profile
@@ -44,10 +54,12 @@ const AuthProvider = ({ children }) => {
         return updateProfile(auth.currentUser, profile);
     };
 
-    // Sign Out User
-    const signOutUser = () => {
+    // Sign Out User: notify backend to clear refresh token and clear firebase
+    const signOutUser = async () => {
         setLoading(true);
-        return signOut(auth);
+        await axios.post('http://localhost:5000/auth/logout', {}, { withCredentials: true });
+        await signOut(auth);
+        setLoading(false);
     };
 
     // Forgot Password
@@ -63,14 +75,13 @@ const AuthProvider = ({ children }) => {
 
     // Observe Auth State Change
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setUser(currentUser);
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+            setUser(currentUser || null);
             setLoading(false);
         });
 
         return () => unsubscribe();
     }, []);
-
 
     const authInfo = {
         registerUser,
@@ -84,11 +95,10 @@ const AuthProvider = ({ children }) => {
         loading,
     };
 
-    return (
-        <AuthContext.Provider value={authInfo}>
-            {children}
-        </AuthContext.Provider>
-    );
+    return <AuthContext.Provider value={authInfo}>
+        {children}
+    </AuthContext.Provider>;
 };
 
 export default AuthProvider;
+

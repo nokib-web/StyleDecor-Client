@@ -41,7 +41,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-2">
                 <FaEnvelope className="text-orange-400" />
-                support@Warmpaws.com
+                support@styledecor.com
               </li>
             </ul>
           </div>
@@ -70,7 +70,7 @@ const Footer = () => {
 
       <footer className="footer max-w-7xl mx-auto sm:footer-horizontal footer-center bg-base-300 text-base-content p-4">
         <aside>
-          <p>Copyright © {new Date().getFullYear()} - All right reserved by WarmPaws.</p>
+          <p>Copyright © {new Date().getFullYear()} - All right reserved by StyleDecor.</p>
         </aside>
       </footer>
     </div>

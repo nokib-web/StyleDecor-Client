@@ -1,48 +1,52 @@
+// src/hooks/useAxiosSecure.js
 import axios from 'axios';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import useAuth from './useAuth';
 import { useNavigate } from 'react-router';
 
 const axiosSecure = axios.create({
-    baseURL: 'http://localhost:5000',
+  baseURL: 'http://localhost:5000',
+  withCredentials: true
 });
 
 const useAxiosSecure = () => {
-    const { user, signOutUser } = useAuth()
-    const navigate = useNavigate();
+  const { signOutUser } = useAuth();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        // intercepts request
-        const reqInterceptor = axiosSecure.interceptors.request.use(config => {
-            config.headers.authorization = `Bearer ${user?.accessToken}`
-            return config
-        });
+  useEffect(() => {
+    const reqInterceptor = axiosSecure.interceptors.request.use(
+      (config) => config,
+      (error) => Promise.reject(error)
+    );
 
-        // interceptors for response
+    const resInterceptor = axiosSecure.interceptors.response.use(
+      (response) => response,
+      async (error) => {
+        const originalRequest = error.config;
+        const status = error.response?.status;
 
-        const resInterceptor = axiosSecure.interceptors.response.use((response) => {
-            return response;
-        },
-            (error) => {
-                console.log(error);
-                const statusCode = error.status;
-                if (statusCode === 401 || statusCode === 403) {
-                    signOutUser()
-                        .then(() => {
-                            navigate('/login')
-                        })
-
-                }
-                return Promise.reject(error)
-            })
-
-        return () => {
-            axiosSecure.interceptors.request.eject(reqInterceptor);
-            axiosSecure.interceptors.response.eject(resInterceptor);
+        if ((status === 401 || status === 403) && !originalRequest._retry) {
+          originalRequest._retry = true;
+          try {
+            await axios.post('http://localhost:5000/auth/refresh-token', {}, { withCredentials: true });
+            return axiosSecure(originalRequest);
+          } catch (refreshError) {
+            console.error('refresh failed', refreshError);
+            await signOutUser();
+            navigate('/login');
+          }
         }
+        return Promise.reject(error);
+      }
+    );
 
-    }, [user, signOutUser, navigate])
-    return axiosSecure;
+    return () => {
+      axiosSecure.interceptors.request.eject(reqInterceptor);
+      axiosSecure.interceptors.response.eject(resInterceptor);
+    };
+  }, [signOutUser, navigate]);
+
+  return axiosSecure;
 };
 
 export default useAxiosSecure;
