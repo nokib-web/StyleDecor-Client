@@ -21,6 +21,10 @@ import ManageBookings from "../pages/Dashboard/Admin/ManageBookings";
 import AdminAnalytics from "../pages/Dashboard/Admin/AdminAnalytics";
 import AssignedProjects from "../pages/Dashboard/Decorator/AssignedProjects";
 import DecoratorEarnings from "../pages/Dashboard/Decorator/DecoratorEarnings";
+import BecomeDecorator from "../pages/BecomeDecorator/BecomeDecorator";
+import DecoratorRoute from "./DecoratorRoute";
+import AdminRoute from "./AdminRoute";
+import PrivateRoute from "./PrivateRoute";
 
 
 const router = createBrowserRouter([
@@ -48,6 +52,10 @@ const router = createBrowserRouter([
                 loader: () => fetch('/serviceCenters.json').then(res => res.json())
 
             },
+            {
+                path: "become-decorator",
+                element: <PrivateRoute><BecomeDecorator></BecomeDecorator></PrivateRoute>
+            },
         ]
     },
     {
@@ -66,7 +74,7 @@ const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        Component: DashboardLayout,
+        element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
         children: [
             // User Routes
             {
@@ -98,30 +106,31 @@ const router = createBrowserRouter([
             // Admin Routes
             {
                 path: 'admin-home',
-                Component: AdminAnalytics
+                element: <AdminRoute><AdminAnalytics></AdminAnalytics></AdminRoute>
             },
             {
                 path: 'manage-users',
-                Component: ManageDecorators
+                element: <AdminRoute><ManageDecorators></ManageDecorators></AdminRoute>
             },
             {
                 path: 'manage-services',
-                Component: ManageServices
+                element: <AdminRoute><ManageServices></ManageServices></AdminRoute>
             },
             {
                 path: 'manage-bookings',
-                Component: ManageBookings
+                element: <AdminRoute><ManageBookings></ManageBookings></AdminRoute>
             },
 
             // Decorator Routes
             {
                 path: 'assigned-projects',
-                Component: AssignedProjects
+                element: <DecoratorRoute><AssignedProjects /></DecoratorRoute>
             },
             {
                 path: 'decorator-earnings',
-                Component: DecoratorEarnings
+                element: <DecoratorRoute><DecoratorEarnings /></DecoratorRoute>
             },
+
         ]
     }
 ]);

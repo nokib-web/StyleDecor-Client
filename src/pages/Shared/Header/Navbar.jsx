@@ -26,17 +26,18 @@ const Navbar = () => {
             <li><NavLink to='/'>Home</NavLink></li>
             {!user && <li><NavLink to='/login'>Login</NavLink></li>}
             {!user && <li><NavLink to='/register'>Register</NavLink></li>}
-            <li><NavLink to='/dashboard'>Dashboard</NavLink></li>
+            {user && <li><NavLink to='/dashboard'>Dashboard</NavLink></li>}
             <li><NavLink to='/services'>All Services</NavLink></li>
+            {user && <li><NavLink to='/become-decorator'>Be A Decorator</NavLink></li>}
             <li><NavLink to='/coverage'>Coverage</NavLink></li>
         </>
     );
- 
+
     return (
         <div>
             <div className="navbar bg-base-100 shadow-sm">
                 <div className="navbar-start">
-                    
+
                     {/* Mobile Menu */}
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

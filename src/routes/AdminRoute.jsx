@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom";
+import { Navigate } from "react-router";
 import useRole from "../hooks/useRole";
 
 const AdminRoute = ({ children }) => {

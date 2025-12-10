@@ -14,6 +14,7 @@ const PaymentHistory = () => {
             return res.data;
         }
     });
+    console.log(payments)
 
     return (
         <div>
@@ -33,7 +34,7 @@ const PaymentHistory = () => {
                             <tr key={payment._id}>
                                 <th>{index + 1}</th>
                                 <td>{payment.transactionId}</td>
-                                <td>${payment.price}</td>
+                                <td>${payment.amount}</td>
                                 <td>{new Date(payment.date).toLocaleDateString()}</td>
                             </tr>
                         ))}

@@ -15,6 +15,8 @@ const Services = () => {
 
   const [category, setCategory] = useState("all");
   const [sort, setSort] = useState("");
+  const [currentPage, setCurrentPage] = useState(0); // 0-indexed for backend
+  const itemsPerPage = 12;
 
   const [priceRange, setPriceRange] = useState({
     min: "",
@@ -33,7 +35,7 @@ const Services = () => {
 
   // QUERY
   const {
-    data: services = [],
+    data,
     isLoading,
     isError,
     error,
@@ -44,17 +46,27 @@ const Services = () => {
       category,
       sort,
       priceRange.min,
-      priceRange.max
+      priceRange.max,
+      currentPage // Add currentPage to queryKey
     ],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/services?search=${debouncedSearch}&category=${category}&sort=${sort}&min=${priceRange.min}&max=${priceRange.max}`
+        `/services?search=${debouncedSearch}&category=${category}&sort=${sort}&min=${priceRange.min}&max=${priceRange.max}&page=${currentPage}&limit=${itemsPerPage}`
       );
-      return res.data.data || [];
+      return res.data; // Return the whole response object to access 'total'
     },
     keepPreviousData: true,
     staleTime: 1000 * 60,
   });
+
+  const services = data?.data || [];
+  const totalItems = data?.total || 0;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  // Reset page when filters change
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [debouncedSearch, category, sort, priceRange]);
 
   // Sidebar toggle
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
@@ -70,7 +82,7 @@ const Services = () => {
             Find Your Service
           </h1>
           <p className="text-gray-600 mt-2">
-            Browse from {isLoading ? "..." : services.length} available services
+            Browse from {isLoading ? "..." : totalItems} available services
           </p>
         </div>
 
@@ -121,7 +133,7 @@ const Services = () => {
             {/* Results Count */}
             <div className="flex justify-between items-center">
               <p className="text-sm text-gray-600">
-                {isLoading ? "Loading..." : `${services.length} services found`}
+                {isLoading ? "Loading..." : `${totalItems} services found`}
               </p>
             </div>
 
@@ -156,11 +168,49 @@ const Services = () => {
 
             {/* Grid */}
             {!isLoading && services.length > 0 && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {services.map((service) => (
-                  <ServiceCard key={service._id} service={service} />
-                ))}
-              </div>
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {services.map((service) => (
+                    <ServiceCard key={service._id} service={service} />
+                  ))}
+                </div>
+
+                {/* Pagination Controls */}
+                <div className="flex justify-center mt-12">
+                  <div className="join">
+                    <button
+                      className="join-item btn"
+                      disabled={currentPage === 0}
+                      onClick={() => setCurrentPage((prev) => Math.max(0, prev - 1))}
+                    >
+                      «
+                    </button>
+
+                    {/* 
+                         Simple Array.from map might be too many buttons if many pages. 
+                         For now, displaying all page numbers as requested or simple list.
+                         Since we want 12 items/page, assuming reasonable total count.
+                     */}
+                    {[...Array(totalPages)].map((_, index) => (
+                      <button
+                        key={index}
+                        className={`join-item btn ${currentPage === index ? "btn-active" : ""}`}
+                        onClick={() => setCurrentPage(index)}
+                      >
+                        {index + 1}
+                      </button>
+                    ))}
+
+                    <button
+                      className="join-item btn"
+                      disabled={currentPage >= totalPages - 1}
+                      onClick={() => setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1))}
+                    >
+                      »
+                    </button>
+                  </div>
+                </div>
+              </>
             )}
           </main>
         </div>
@@ -168,11 +218,10 @@ const Services = () => {
 
       {/* =============== MOBILE SIDEBAR =============== */}
       <div
-        className={`fixed inset-0 z-50 lg:hidden transition-opacity ${
-          isSidebarOpen
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
-        }`}
+        className={`fixed inset-0 z-50 lg:hidden transition-opacity ${isSidebarOpen
+          ? "opacity-100 pointer-events-auto"
+          : "opacity-0 pointer-events-none"
+          }`}
       >
         {/* backdrop */}
         <div
@@ -182,9 +231,8 @@ const Services = () => {
 
         {/* Drawer */}
         <div
-          className={`absolute inset-y-0 left-0 w-80 bg-base-100 shadow-2xl transform transition-transform duration-300 ${
-            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
+          className={`absolute inset-y-0 left-0 w-80 bg-base-100 shadow-2xl transform transition-transform duration-300 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
         >
           <div className="flex items-center justify-between p-6 border-b">
             <h2 className="text-xl font-bold">Filters</h2>
