@@ -17,11 +17,14 @@ import PaymentSuccess from "../pages/Dashboard/User/Payment/PaymentSuccess";
 import PaymentCanceled from "../pages/Dashboard/User/Payment/PaymentCanceled";
 import ManageDecorators from "../pages/Dashboard/Admin/ManageDecorators";
 import ManageServices from "../pages/Dashboard/Admin/ManageServices";
+import AddService from "../pages/Dashboard/Admin/AddService";
 import ManageBookings from "../pages/Dashboard/Admin/ManageBookings";
 import AdminAnalytics from "../pages/Dashboard/Admin/AdminAnalytics";
 import AssignedProjects from "../pages/Dashboard/Decorator/AssignedProjects";
 import DecoratorEarnings from "../pages/Dashboard/Decorator/DecoratorEarnings";
 import BecomeDecorator from "../pages/BecomeDecorator/BecomeDecorator";
+import About from "../pages/About/About";
+import Contact from "../pages/Contact/Contact";
 import DecoratorRoute from "./DecoratorRoute";
 import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
@@ -55,6 +58,14 @@ const router = createBrowserRouter([
             {
                 path: "become-decorator",
                 element: <PrivateRoute><BecomeDecorator></BecomeDecorator></PrivateRoute>
+            },
+            {
+                path: "about",
+                element: <About />
+            },
+            {
+                path: "contact",
+                element: <Contact />
             },
         ]
     },
@@ -115,6 +126,10 @@ const router = createBrowserRouter([
             {
                 path: 'manage-services',
                 element: <AdminRoute><ManageServices></ManageServices></AdminRoute>
+            },
+            {
+                path: 'add-service',
+                element: <AdminRoute><AddService /></AdminRoute>
             },
             {
                 path: 'manage-bookings',

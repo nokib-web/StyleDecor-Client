@@ -2,23 +2,18 @@ import React from 'react';
 import { FaEnvelope, FaFacebook, FaInstagram, FaMapMarkerAlt, FaPhoneAlt, } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import { Link } from 'react-router';
-
+import Logo from '../../../components/Logo/Logo';
 
 const Footer = () => {
   return (
-    <div className='bg-base-300 '>
-      <footer className="footer max-w-7xl mx-auto sm:footer-horizontal bg-base-300 text-base-content p-10">
-        <nav>
-          <Link to='/'><p className='font-bold flex  items-center text-xl'>  StyleDecor</p></Link>
-          <p>
-            Your trusted partner in compassionate <br /> and reliable care.
-            Providing , <br /> safety, and dedicated support for every touch.
-
-
-
+    <div className="bg-base-200 border-t border-base-300">
+      <footer className="footer max-w-7xl mx-auto sm:footer-horizontal bg-base-200 text-base-content p-10">
+        <aside>
+          <Logo />
+          <p className="mt-4 max-w-xs leading-relaxed text-gray-500">
+            Transforming spaces into timeless masterpieces. Your trusted partner in compassionate and reliable interior design.
           </p>
-
-        </nav>
+        </aside>
         <nav>
           <h6 className="footer-title">Quick Links</h6>
           <Link to="/" className="link link-hover">Home</Link>

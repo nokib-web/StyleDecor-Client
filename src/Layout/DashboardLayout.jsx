@@ -42,20 +42,27 @@ const DashboardLayout = () => {
     };
 
     return (
-        <div className="drawer lg:drawer-open">
+        <div className="drawer max-w-7xl mx-auto lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content flex flex-col p-4">
+            <div className="drawer-content flex flex-col bg-(--color-canvas)">
                 {/* Navbar for mobile */}
-                <div className="w-full navbar bg-base-100 lg:hidden">
+                <div className="w-full navbar bg-(--color-surface) lg:hidden border-b border-(--color-border)">
                     <div className="flex-none">
-                        <label htmlFor="my-drawer-2" className="btn btn-square btn-ghost">
+                        <label htmlFor="my-drawer-2" className="btn btn-square btn-ghost text-(--color-text-primary)">
                             <FiMenu className="text-xl" />
                         </label>
                     </div>
-                    <div className="flex-1 px-2 mx-2">StyleDecor Dashboard</div>
+                    <div className="flex-1 px-2 mx-2 font-bold text-(--color-text-primary)">StyleDecor Dashboard</div>
                 </div>
 
-                <Outlet></Outlet>
+                {/* Desktop Top Bar */}
+                <div className="hidden lg:flex w-full bg-(--color-surface) h-16 items-center px-8 shadow-sm border-b border-(--color-border)">
+                    <h1 className="text-xl font-bold text-(--color-text-primary)">StyleDecor Dashboard</h1>
+                </div>
+
+                <div className="p-8">
+                    <Outlet></Outlet>
+                </div>
             </div>
             <div className="drawer-side">
                 <label htmlFor="my-drawer-2" className="drawer-overlay"></label>

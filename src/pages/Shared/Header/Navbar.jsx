@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router';
 import Logo from '../../../components/Logo/Logo';
 import { useQueryClient } from '@tanstack/react-query';
 import useAuth from '../../../hooks/useAuth';
+import { FiUser, FiLogOut, FiGrid, FiMenu, FiX } from 'react-icons/fi';
 
 const Navbar = () => {
     const { user, signOutUser } = useAuth();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     // --- LOGOUT FUNCTION ---
     const handleLogout = async () => {
@@ -20,76 +22,187 @@ const Navbar = () => {
         }
     };
 
+    // Active Link Class - Consuming Global Variables
+    const getLinkClass = ({ isActive }) =>
+        isActive
+            ? "text-[var(--color-primary)] font-bold border-b-2 border-[var(--color-primary)] pb-1 transition-all duration-300"
+            : "text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] font-medium transition-all duration-300 hover:pb-1";
+
+    const sidebarLinkClass = ({ isActive }) =>
+        isActive
+            ? "block px-6 py-4 text-xl font-bold text-[var(--color-primary)] bg-[var(--color-primary-light)]/20 border-l-4 border-[var(--color-primary)]"
+            : "block px-6 py-4 text-xl font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] hover:bg-[var(--color-surface-2)] transition-all";
+
     // --- NAV LINKS ---
-    const links = (
-        <>
-            <li><NavLink to='/'>Home</NavLink></li>
-            {!user && <li><NavLink to='/login'>Login</NavLink></li>}
-            {!user && <li><NavLink to='/register'>Register</NavLink></li>}
-            {user && <li><NavLink to='/dashboard'>Dashboard</NavLink></li>}
-            <li><NavLink to='/services'>All Services</NavLink></li>
-            {user && <li><NavLink to='/become-decorator'>Be A Decorator</NavLink></li>}
-            <li><NavLink to='/coverage'>Coverage</NavLink></li>
-        </>
-    );
+    const navItems = [
+        { path: '/', label: 'Home' },
+        { path: '/about', label: 'About' },
+        { path: '/services', label: 'Services' },
+        { path: '/coverage', label: 'Coverage' },
+        { path: '/contact', label: 'Contact' },
+    ];
 
     return (
-        <div>
-            <div className="navbar bg-base-100 shadow-sm">
+        <div className="sticky top-0 z-50 bg-[var(--color-surface)]/95 backdrop-blur-md shadow-sm border-b border-[var(--color-border)]">
+            <div className="navbar max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 <div className="navbar-start">
+                    {/* Mobile Menu Toggle */}
+                    <button
+                        onClick={() => setIsSidebarOpen(true)}
+                        className="btn btn-ghost btn-circle lg:hidden text-[var(--color-text-primary)] hover:bg-[var(--color-primary-light)]"
+                    >
+                        <FiMenu className="h-7 w-7" />
+                    </button>
 
-                    {/* Mobile Menu */}
-                    <div className="dropdown">
-                        <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                className="h-5 w-5"
-                                fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                                    d="M4 6h16M4 12h8m-8 6h16" />
-                            </svg>
-                        </div>
-
-                        <ul
-                            tabIndex={0}
-                            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow"
-                        >
-                            {links}
-
-                            {/* Mobile Logout */}
-                            {user && (
-                                <li>
-                                    <button onClick={handleLogout} className="btn btn-error mt-2">
-                                        Logout
-                                    </button>
-                                </li>
-                            )}
-                        </ul>
-                    </div>
-
-                    <span className="btn btn-ghost text-xl">
+                    <div className="px-2 hover:bg-transparent cursor-pointer">
                         <Logo />
-                    </span>
+                    </div>
                 </div>
 
                 {/* Desktop Menu */}
                 <div className="navbar-center hidden lg:flex">
-                    <ul className="menu menu-horizontal px-1">
-                        {links}
+                    <ul className="flex items-center gap-8">
+                        {navItems.map((item) => (
+                            <li key={item.path}>
+                                <NavLink to={item.path} className={getLinkClass}>
+                                    {item.label}
+                                </NavLink>
+                            </li>
+                        ))}
                     </ul>
                 </div>
 
-                {/* Desktop Logout Button */}
-                <div className="navbar-end">
+                <div className="navbar-end gap-3">
                     {user ? (
-                        <button onClick={handleLogout} className="btn btn-error">
-                            Logout
-                        </button>
+                        <div className="dropdown dropdown-end">
+                            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar online ring-2 ring-primary ring-offset-2 ring-offset-base-100 h-10 w-10">
+                                <div className="w-10 rounded-full">
+                                    <img
+                                        alt="User Avatar"
+                                        src={user?.photoURL || "https://placehold.co/100"}
+                                    />
+                                </div>
+                            </div>
+                            <ul
+                                tabIndex={0}
+                                className="menu menu-sm dropdown-content bg-white rounded-box z-[1] mt-4 w-52 p-2 shadow-xl border border-gray-100"
+                            >
+                                <div className="px-4 py-3 border-b border-gray-100 mb-2">
+                                    <p className="font-semibold text-gray-800 truncate">{user.displayName || 'User'}</p>
+                                    <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                                </div>
+                                <li>
+                                    <NavLink to="/dashboard" className="flex items-center gap-2 py-2 hover:text-primary">
+                                        <FiGrid /> Dashboard
+                                    </NavLink>
+                                </li>
+                                {!user.role && <li><NavLink to='/become-decorator' className="hover:text-primary">Become a Decorator</NavLink></li>}
+
+                                <li className="mt-1">
+                                    <button onClick={handleLogout} className="flex items-center gap-2 py-2 text-red-500 hover:bg-red-50 hover:text-red-600">
+                                        <FiLogOut /> Logout
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
                     ) : (
-                        <Link to="/login" className="btn">
-                            Login
-                        </Link>
+                        <div className="flex items-center gap-3">
+                            <Link to="/login" className="btn btn-ghost text-gray-700 font-medium hover:text-primary">
+                                Login
+                            </Link>
+                            <Link to="/register" className="btn btn-primary text-white px-6 rounded-full shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all transform hover:-translate-y-0.5">
+                                Join Now
+                            </Link>
+                        </div>
                     )}
+                </div>
+            </div>
+
+            {/* Mobile Sidebar Overlay */}
+            <div
+                className={`fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${isSidebarOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+                    }`}
+                onClick={() => setIsSidebarOpen(false)}
+            >
+                {/* Sidebar Content */}
+                <div
+                    className={`fixed top-0 left-0 w-[85%] max-w-sm h-full bg-white shadow-2xl transition-transform duration-300 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+                        }`}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <div className="flex justify-between items-center p-6 border-b border-gray-100">
+                        <Logo />
+                        <button onClick={() => setIsSidebarOpen(false)} className="btn btn-ghost btn-circle text-gray-500">
+                            <FiX className="h-6 w-6" />
+                        </button>
+                    </div>
+
+                    <div className="py-4 overflow-y-auto h-[calc(100%-80px)]">
+                        {user && (
+                            <div className="px-6 pb-6 mb-4 border-b border-gray-100">
+                                <div className="flex items-center gap-4">
+                                    <div className="avatar online">
+                                        <div className="w-12 h-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                            <img src={user.photoURL || "https://placehold.co/100"} alt="Avatar" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p className="font-bold text-gray-800 text-lg">{user.displayName}</p>
+                                        <p className="text-sm text-gray-500 truncate w-40">{user.email}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        <nav className="flex flex-col">
+                            {navItems.map((item) => (
+                                <NavLink
+                                    key={item.path}
+                                    to={item.path}
+                                    className={sidebarLinkClass}
+                                    onClick={() => setIsSidebarOpen(false)}
+                                >
+                                    {item.label}
+                                </NavLink>
+                            ))}
+
+                            {user ? (
+                                <>
+                                    <div className="divider px-6 my-2">Account</div>
+                                    <NavLink
+                                        to="/dashboard"
+                                        className={sidebarLinkClass}
+                                        onClick={() => setIsSidebarOpen(false)}
+                                    >
+                                        Dashboard
+                                    </NavLink>
+                                    <button
+                                        onClick={handleLogout}
+                                        className="w-full text-left px-6 py-4 text-xl font-medium text-red-500 hover:bg-red-50 transition-all"
+                                    >
+                                        Logout
+                                    </button>
+                                </>
+                            ) : (
+                                <div className="p-6 mt-4">
+                                    <Link
+                                        to="/login"
+                                        className="btn btn-outline btn-primary w-full mb-3"
+                                        onClick={() => setIsSidebarOpen(false)}
+                                    >
+                                        Login
+                                    </Link>
+                                    <Link
+                                        to="/register"
+                                        className="btn btn-primary w-full text-white"
+                                        onClick={() => setIsSidebarOpen(false)}
+                                    >
+                                        Register
+                                    </Link>
+                                </div>
+                            )}
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>

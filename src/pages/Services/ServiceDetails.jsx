@@ -36,6 +36,8 @@ const ServiceDetails = () => {
         const form = e.target;
         const address = form.address.value;
         const date = form.date.value;
+        const slot = form.slot.value;
+        const serviceType = form.serviceType.value;
 
         if (!user) {
             Swal.fire("Please login to book a service");
@@ -53,6 +55,8 @@ const ServiceDetails = () => {
             userName: user.displayName,
             address,
             date,
+            slot,
+            serviceType,
             status: "pending"
         };
         console.log("Booking Submission Payload:", bookingData);
@@ -300,11 +304,34 @@ const ServiceDetails = () => {
                                 </div>
                             </div>
 
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="form-control">
+                                    <label className="label">
+                                        <span className="label-text font-medium">Service Mode</span>
+                                    </label>
+                                    <select name="serviceType" className="select select-bordered focus:select-primary" required>
+                                        <option value="consultation">In-studio (Consultation)</option>
+                                        <option value="on-site">On-site (Decoration)</option>
+                                    </select>
+                                </div>
+                                <div className="form-control">
+                                    <label className="label">
+                                        <span className="label-text font-medium">Time Slot</span>
+                                    </label>
+                                    <select name="slot" className="select select-bordered focus:select-primary" required>
+                                        <option value="10:00 AM">10:00 AM</option>
+                                        <option value="12:00 PM">12:00 PM</option>
+                                        <option value="03:00 PM">03:00 PM</option>
+                                        <option value="06:00 PM">06:00 PM</option>
+                                    </select>
+                                </div>
+                            </div>
+
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text font-medium">Preferred Date</span>
                                 </label>
-                                <input type="date" name="date" required className="input input-bordered focus:input-primary" />
+                                <input type="date" name="date" required className="input input-bordered focus:input-primary" min={new Date().toISOString().split('T')[0]} />
                             </div>
                             <div className="form-control">
                                 <label className="label">

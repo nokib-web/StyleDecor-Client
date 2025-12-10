@@ -4,6 +4,7 @@ import useAuth from '../../../hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router';
+import BookingTracking from '../../../components/BookingTracking';
 
 const MyBookings = () => {
     const { user } = useAuth();
@@ -47,18 +48,7 @@ const MyBookings = () => {
         });
     };
 
-    const getStepClass = (currentStatus, stepStatus) => {
-        const statusOrder = ['pending', 'confirmed', 'in-progress', 'completed', 'paid'];
-        const currentIndex = statusOrder.indexOf(currentStatus);
-        const stepIndex = statusOrder.indexOf(stepStatus);
 
-        // Paid is special, it might come after completed or be separate, assuming linear flow for now or simplified
-        // If status is 'paid', it implies everything before is done. 
-        // If current is 'confirmed', pending is done.
-
-        if (currentIndex >= stepIndex) return "step step-primary";
-        return "step";
-    };
 
     return (
         <div className="p-4">
@@ -90,13 +80,7 @@ const MyBookings = () => {
                                     </div>
                                 </td>
                                 <td>
-                                    <ul className="steps steps-vertical lg:steps-horizontal w-full">
-                                        <li className={getStepClass(booking.status, 'pending')}>Pending</li>
-                                        <li className={getStepClass(booking.status, 'confirmed')}>Confirmed</li>
-                                        <li className={getStepClass(booking.status, 'in-progress')}>In Progress</li>
-                                        <li className={getStepClass(booking.status, 'completed')}>Completed</li>
-                                        <li className={getStepClass(booking.status, 'paid')}>Paid</li>
-                                    </ul>
+                                    <BookingTracking status={booking.status} />
                                 </td>
                                 <td>
                                     {booking.status === 'pending' && (

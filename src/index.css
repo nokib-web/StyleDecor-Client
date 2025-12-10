@@ -1,9 +1,124 @@
 @import "tailwindcss";
-@plugin "daisyui"{
-     themes: light --default;
-};
 
-.active{
-     color: blue;
+@plugin "daisyui" {
+     themes: light --default, dark;
+}
+
+:root {
+     --color-primary: oklch(72% 0.16 55);
+     /* Rich, muted 24k gold – elegant and warm */
+     --color-primary-light: oklch(94% 0.08 60);
+     /* Very light warm cream (backgrounds/cards) */
+     --color-primary-dark: oklch(32% 0.06 260);
+     /* Deep charcoal-navy (almost black but cooler) */
+
+     --color-secondary: oklch(58% 0.10 270);
+     /* Sophisticated cool slate-purple */
+     --color-secondary-light: oklch(85% 0.05 270);
+     /* Light variant for subtle surfaces */
+
+     --color-accent: oklch(68% 0.14 70);
+     /* Slightly more vibrant gold-green accent (feels expensive) */
+     --color-accent-hover: oklch(62% 0.16 70);
+     /* Deeper on hover/active */
+     --color-accent-subtle: oklch(92% 0.06 70);
+     /* Very light accent background */
+
+     /* ≈ Neutral Foundation – Clean & Modern */
+     --color-canvas: oklch(99.5% 0.002 280);
+     /* Pure off-white */
+     --color-surface: oklch(97% 0.004 270);
+     /* Elevated card / panel */
+     --color-surface-2: oklch(94% 0.008 270);
+     /* Slightly deeper layer */
+     --color-border: oklch(88% 0.01 270);
+     /* Ultra-subtle border */
+     --color-divider: oklch(90% 0.006 270);
+     /* Even softer divider */
+
+     /* ≈ Text – Maximum Readability & Hierarchy */
+     --color-text-primary: oklch(20% 0.02 260);
+     /* Almost black, slight cool tint */
+     --color-text-secondary: oklch(38% 0.03 260);
+     /* Medium dark gray */
+     --color-text-muted: oklch(55% 0.03 260);
+     /* Placeholder / caption */
+     --color-text-on-primary: oklch(96% 0.05 60);
+     /* Near-white for text on gold buttons */
+     --color-text-inverse: oklch(98% 0.01 280);
+     /* White text on dark backgrounds */
+
+     /* ≈ Status Colors – Professional & Accessible */
+     --color-success: oklch(62% 0.14 145);
+     --color-success-bg: oklch(94% 0.04 145);
+     --color-error: oklch(62% 0.18 25);
+     --color-error-bg: oklch(96% 0.06 25);
+     --color-warning: oklch(72% 0.16 80);
+     --color-warning-bg: oklch(96% 0.07 80);
+     --color-info: oklch(64% 0.12 230);
+     --color-info-bg: oklch(94% 0.05 230);
+
+     /* ≈ Extra Utility Colors */
+
+     --color-overlay: rgb(20 20 30 / 0.6);
+     --color-shadow: rgb(0 0 0 / 0.08);
+}
+
+
+/* Body & Typography */
+body {
+     background-color: var(--color-canvas);
+     color: var(--color-text-primary);
+     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+     -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+     color: var(--color-text-primary);
+     letter-spacing: -0.01em;
+}
+
+/* Utilities consuming new variables */
+.active {
+     color: var(--color-primary) !important;
      font-weight: bold;
+     border-bottom: 2px solid var(--color-primary);
+}
+
+.btn-primary {
+     background-color: var(--color-primary);
+     color: var(--color-text-on-primary);
+     border: none;
+     transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+     filter: brightness(0.9);
+     transform: translateY(-2px);
+     box-shadow: 0 4px 12px var(--color-primary-light);
+}
+
+.text-gradient {
+     background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+     -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+}
+
+/* Card Professional */
+.card-professional {
+     background-color: var(--color-surface);
+     border: 1px solid var(--color-border);
+     box-shadow: 0 2px 8px var(--color-shadow);
+     transition: all 0.3s ease;
+}
+
+.card-professional:hover {
+     box-shadow: 0 8px 24px var(--color-shadow);
+     transform: translateY(-2px);
+     border-color: var(--color-primary-light);
 }

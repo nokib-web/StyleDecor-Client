@@ -69,7 +69,7 @@ const BecomeDecorator = () => {
                         {/* Name & Email (Read only) */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="form-control">
-                                <label className="label font-medium text-gray-600">Name</label>
+                                <label className="label font-medium text-gray-600">Name</label> <br />
                                 <input
                                     type="text"
                                     value={user?.displayName || ''}
@@ -78,7 +78,7 @@ const BecomeDecorator = () => {
                                 />
                             </div>
                             <div className="form-control">
-                                <label className="label font-medium text-gray-600">Email</label>
+                                <label className="label font-medium text-gray-600">Email</label> <br />
                                 <input
                                     type="email"
                                     value={user?.email || ''}
@@ -86,23 +86,25 @@ const BecomeDecorator = () => {
                                     className="input input-bordered bg-gray-100 cursor-not-allowed"
                                 />
                             </div>
+
+                            {/* Portfolio Link */}
+                            <div className="form-control">
+                                <label className="label font-medium text-gray-600">Portfolio URL</label> <br />
+                                <input
+                                    type="url"
+                                    placeholder="https://yourportfolio.com"
+                                    {...register("portfolio", { required: "Portfolio link is required" })}
+                                    className="input input-bordered"
+                                />
+                                {errors.portfolio && <p className="text-red-500 text-sm mt-1">{errors.portfolio.message}</p>}
+                            </div>
                         </div>
 
-                        {/* Portfolio Link */}
-                        <div className="form-control">
-                            <label className="label font-medium text-gray-600">Portfolio URL</label>
-                            <input
-                                type="url"
-                                placeholder="https://yourportfolio.com"
-                                {...register("portfolio", { required: "Portfolio link is required" })}
-                                className="input input-bordered"
-                            />
-                            {errors.portfolio && <p className="text-red-500 text-sm mt-1">{errors.portfolio.message}</p>}
-                        </div>
+
 
                         {/* Experience */}
                         <div className="form-control">
-                            <label className="label font-medium text-gray-600">Years of Experience</label>
+                            <label className="label font-medium text-gray-600">Years of Experience</label> <br />
                             <input
                                 type="number"
                                 placeholder="e.g. 5"
@@ -114,7 +116,7 @@ const BecomeDecorator = () => {
 
                         {/* Specialty */}
                         <div className="form-control">
-                            <label className="label font-medium text-gray-600">Specialty (e.g., Modern, Rustic, Commercial)</label>
+                            <label className="label font-medium text-gray-600">Specialty (e.g., Modern, Rustic, Commercial)</label> <br />
                             <input
                                 type="text"
                                 placeholder="What is your main style?"
@@ -127,7 +129,7 @@ const BecomeDecorator = () => {
 
                         {/* About */}
                         <div className="form-control">
-                            <label className="label font-medium text-gray-600">Why should we hire you?</label>
+                            <label className="label font-medium text-gray-600">Why should we hire you?</label> <br />
                             <textarea
                                 className="textarea textarea-bordered h-32"
                                 placeholder="Tell us about your passion and expertise..."

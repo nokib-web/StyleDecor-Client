@@ -3,6 +3,7 @@ import Hero from '../Hero/Hero';
 import FeaturedServices from '../FeaturedServices/FeaturedServices';
 import TopDecorators from '../TopDecorators/TopDecorators';
 import HomeMap from '../HomeMap/HomeMap';
+import Brand from '../Brand/Brand';
 
 const Home = () => {
     return (
@@ -10,6 +11,7 @@ const Home = () => {
             <Hero />
             <FeaturedServices />
             <TopDecorators />
+             <Brand />
             <HomeMap />
         </div>
     );
