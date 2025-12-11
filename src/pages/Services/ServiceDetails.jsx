@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 // import axios from "axios";
-import { FaTag, FaTools, FaCheckCircle, FaMapMarkerAlt, FaShieldAlt, FaClock, FaUserTie } from "react-icons/fa";
-import useAuth from "../../hooks/useAuth";
+// Imports updated
+import { FaTag, FaTools, FaCheckCircle, FaMapMarkerAlt, FaShieldAlt, FaClock, FaUserTie, FaHeart } from "react-icons/fa";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 
 const ServiceDetails = () => {
@@ -43,28 +44,50 @@ const ServiceDetails = () => {
         }
     };
 
-    // Derived Calculations
-    // Note: 'service' is derived later, so we need to be careful. Ideally these logic should be after 'service' definition.
-    // However, since they rely on 'service' which is available in render scope, we can define calculation functions here 
-    // but they will need 'service' to be available. 
-    // Moving handleBookingSubmit and these helpers AFTER 'service' definition in next step.
-
     // Fetch single service by ID
-    // Renamed 'data' to 'serviceData' for clarity
     const { data: serviceData, isLoading, isError } = useQuery({
         queryKey: ["service", id],
         queryFn: async () => {
             const res = await axiosSecure.get(`/services/${id}`);
-            // res.data is the service object itself
-            console.log("Service API Response:", res.data);
             return res.data;
         },
     });
 
-    // service is now correctly assigned the fetched object
     const service = serviceData?.data;
-    console.log("ServiceData:", serviceData);
-    console.log("Derived Service:", service);
+
+    // --- Wishlist & Reviews Logic ---
+    const { data: reviews, isLoading: isReviewsLoading } = useQuery({
+        queryKey: ['reviews', id],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/reviews/${id}`);
+            return res.data;
+        },
+        enabled: !!id // only fetch if id exists
+    });
+
+    const handleAddToWishlist = async () => {
+        if (!user) {
+            Swal.fire("Please login first");
+            return;
+        }
+        const wishlistItem = {
+            serviceId: id,
+            serviceName: service?.title,
+            serviceImage: service?.image,
+            price: service?.price,
+            userEmail: user.email
+        };
+        try {
+            const res = await axiosSecure.post('/wishlist', wishlistItem);
+            if (res.data.insertedId) {
+                Swal.fire("Success", "Added to your Wishlist!", "success");
+            } else if (res.data.message === 'Already in wishlist') {
+                Swal.fire("Info", "Already in your Wishlist", "info");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     // --- Calculation Helpers ---
     const calculateTotal = () => {
@@ -92,12 +115,11 @@ const ServiceDetails = () => {
             return;
         }
 
-        // Correctly using service for booking payload
         const bookingData = {
             serviceId: id,
             serviceName: service?.title,
             serviceImage: service?.image,
-            price: calculateDiscountedTotal(), // Use final discounted price
+            price: calculateDiscountedTotal(),
             originalPrice: calculateTotal(),
             discountApplied: isCouponApplied ? "20%" : "0%",
             addOns: selectedAddOns,
@@ -110,7 +132,6 @@ const ServiceDetails = () => {
             serviceType,
             status: "pending"
         };
-        console.log("Booking Submission Payload:", bookingData);
 
         if (!bookingData.price) {
             Swal.fire({
@@ -192,10 +213,19 @@ const ServiceDetails = () => {
                     <div className="bg-base-100 p-6 rounded-xl shadow-sm border border-base-200">
                         <div className="flex justify-between items-start mb-4">
                             <div>
-                                <h1 className="text-3xl font-bold text-gray-800">{title}</h1>
+                                <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-3">
+                                    {title}
+                                   
+                                </h1>
                                 <div className="flex items-center gap-2 mt-2 text-primary uppercase font-semibold text-sm tracking-wide">
                                     <span className="badge badge-outline badge-primary">{category}</span>
                                     {isCustomizable && <span className="badge badge-accent text-white">Customizable</span>}
+                                     <button onClick={handleAddToWishlist} className="btn btn-ghost btn-sm text-red-500 hover:bg-red-50" title="Add to Wishlist">
+                                        <FaHeart className="text-2xl" /> <span>Add to Wishlist</span>
+                                    </button>
+                                </div>
+                                <div>
+                                        
                                 </div>
                             </div>
                             {rating && (
@@ -207,6 +237,7 @@ const ServiceDetails = () => {
                                 </div>
                             )}
                         </div>
+
 
                         <p className="text-gray-600 leading-relaxed text-lg mb-6">
                             {description}
@@ -221,7 +252,7 @@ const ServiceDetails = () => {
                                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                     {features.map((feature, idx) => (
                                         <li key={idx} className="flex items-center gap-3 bg-base-200 p-3 rounded-lg">
-                                            <FaCheckCircle className="text-green-500 flex-shrink-0" />
+                                            <FaCheckCircle className="text-green-500 shrink-0" />
                                             <span className="text-gray-700">{feature}</span>
                                         </li>
                                     ))}
@@ -461,6 +492,40 @@ const ServiceDetails = () => {
                     </div>
                 </div>
             )}
+
+
+            {/* Reviews Section */}
+            <div className="mt-16 bg-base-100 p-6 rounded-xl shadow-sm border border-base-200">
+                <h3 className="text-2xl font-bold mb-6">Customer Reviews</h3>
+                {isReviewsLoading ? (
+                    <span className="loading loading-dots loading-md"></span>
+                ) : reviews && reviews.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {reviews.map(review => (
+                            <div key={review._id} className="p-4 border rounded-lg bg-base-50">
+                                <div className="flex items-center gap-2 mb-2">
+                                    <div className="avatar placeholder">
+                                        <div className="bg-neutral text-neutral-content rounded-full w-8">
+                                            <span className="text-xs">{review.userName.charAt(0)}</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p className="font-bold text-sm">{review.userName}</p>
+                                        <div className="flex text-yellow-500 text-xs">
+                                            {[...Array(5)].map((_, i) => (
+                                                <span key={i}>{i < review.rating ? "★" : "☆"}</span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                                <p className="text-gray-600 text-sm">{review.comment}</p>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <p className="text-gray-500 italic">No reviews yet. Be the first to book and review!</p>
+                )}
+            </div>
         </div>
     );
 };

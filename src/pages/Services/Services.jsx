@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { FiSearch, FiFilter, FiX } from "react-icons/fi";
+import { Link } from "react-router";
+import Swal from 'sweetalert2';
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import ServiceCard from "../../components/ServiceCard/ServiceCard";
 import FiltersSidebar from "./FiltersSidebar";
@@ -24,6 +26,28 @@ const Services = () => {
   });
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [selectedForComparison, setSelectedForComparison] = useState([]);
+
+  const toggleCompare = (service) => {
+    const exists = selectedForComparison.find(s => s._id === service._id);
+    if (exists) {
+      setSelectedForComparison(prev => prev.filter(s => s._id !== service._id));
+    } else {
+      if (selectedForComparison.length >= 3) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Limit Reached',
+          text: 'You can compare up to 3 services at a time.',
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000
+        });
+        return;
+      }
+      setSelectedForComparison(prev => [...prev, service]);
+    }
+  };
 
   // Debounce Search
   useEffect(() => {
@@ -72,7 +96,7 @@ const Services = () => {
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pb-24">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
 
@@ -171,7 +195,12 @@ const Services = () => {
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                   {services.map((service) => (
-                    <ServiceCard key={service._id} service={service} />
+                    <ServiceCard
+                      key={service._id}
+                      service={service}
+                      onToggleCompare={toggleCompare}
+                      isSelected={selectedForComparison.some(s => s._id === service._id)}
+                    />
                   ))}
                 </div>
 
@@ -255,7 +284,132 @@ const Services = () => {
           </div>
         </div>
       </div>
-    </div>
+
+      {/* =============== COMPARISON FLOATING BAR =============== */}
+      {
+        selectedForComparison.length > 0 && (
+          <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] z-40 animate-slide-up transition-transform duration-300">
+            <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+
+              <div className="flex items-center gap-4 overflow-x-auto pb-2 sm:pb-0 w-full sm:w-auto scrollbar-hide">
+                <span className="font-bold text-gray-700 whitespace-nowrap hidden sm:block">Compare ({selectedForComparison.length}/3):</span>
+                {selectedForComparison.map(service => (
+                  <div key={service._id} className="relative group shrink-0">
+                    <img src={service.image} alt={service.title} className="w-12 h-12 rounded-lg object-cover border border-gray-200" />
+                    <button
+                      onClick={() => toggleCompare(service)}
+                      className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex gap-3 w-full sm:w-auto">
+                <button
+                  onClick={() => setSelectedForComparison([])}
+                  className="btn btn-ghost btn-sm text-gray-500"
+                >
+                  Clear All
+                </button>
+                <button
+                  onClick={() => document.getElementById('comparison_modal').showModal()}
+                  className="btn btn-primary btn-sm px-6"
+                >
+                  Compare Now
+                </button>
+              </div>
+            </div>
+          </div>
+        )
+      }
+
+      {/* =============== COMPARISON MODAL =============== */}
+      <dialog id="comparison_modal" className="modal">
+        <div className="modal-box w-11/12 max-w-5xl">
+          <form method="dialog">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+          </form>
+
+          <h3 className="font-bold text-2xl mb-6 text-center">Service Comparison</h3>
+
+          <div className="overflow-x-auto">
+            <table className="table table-zebra w-full text-center">
+              <thead>
+                <tr>
+                  <th className="text-left w-32">Feature</th>
+                  {selectedForComparison.map(service => (
+                    <th key={service._id} className="min-w-[200px] text-lg text-primary">{service.title}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {/* Image Row */}
+                <tr>
+                  <td className="font-bold text-left">Preview</td>
+                  {selectedForComparison.map(service => (
+                    <td key={service._id}>
+                      <img src={service.image} alt={service.title} className="w-32 h-20 object-cover rounded mx-auto" />
+                    </td>
+                  ))}
+                </tr>
+
+                {/* Price Row */}
+                <tr>
+                  <td className="font-bold text-left">Price</td>
+                  {selectedForComparison.map(service => (
+                    <td key={service._id} className="font-semibold text-gray-700">${service.price}</td>
+                  ))}
+                </tr>
+
+                {/* Delivery Time */}
+                <tr>
+                  <td className="font-bold text-left">Duration</td>
+                  {selectedForComparison.map(service => (
+                    <td key={service._id}>{service.deliveryTime} Days</td>
+                  ))}
+                </tr>
+
+                {/* Rating */}
+                <tr>
+                  <td className="font-bold text-left">Rating</td>
+                  {selectedForComparison.map(service => (
+                    <td key={service._id}>⭐ {service.rating || 'N/A'}</td>
+                  ))}
+                </tr>
+
+                {/* Provider */}
+                <tr>
+                  <td className="font-bold text-left">Provider</td>
+                  {selectedForComparison.map(service => (
+                    <td key={service._id}>{service.serviceProvider}</td>
+                  ))}
+                </tr>
+
+                {/* Actions */}
+                <tr>
+                  <td className="font-bold text-left">Action</td>
+                  {selectedForComparison.map(service => (
+                    <td key={service._id}>
+                      <Link to={`/services/${service._id}`} className="btn btn-sm btn-outline btn-primary">View Details</Link>
+                    </td>
+                  ))}
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <div className="modal-action">
+            <form method="dialog">
+              <button className="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+
+    </div >
   );
 };
 

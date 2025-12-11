@@ -2,42 +2,56 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
 import { FiCheckCircle, FiUploadCloud, FiBriefcase, FiDollarSign } from 'react-icons/fi';
+
+const image_hosting_key = import.meta.env.VITE_image_host;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 import useAuth from '../../hooks/useAuth';
 
 const BecomeDecorator = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
+    const axiosPublic = useAxiosPublic();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const onSubmit = async (data) => {
         setIsSubmitting(true);
-        const applicationData = {
-            ...data,
-            email: user?.email,
-            photo: user?.photoURL,
-            currentRole: 'user', // Initial state
-        };
-
         try {
-            const res = await axiosSecure.post('/applications', applicationData);
-            if (res.data.insertedId) {
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Application submitted successfully!",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                reset();
-            } else if (res.data.message === 'Already applied') {
-                Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "You have already submitted an application.",
-                });
+            // Upload Image to ImgBB
+            const imageFile = { image: data.portfolio[0] };
+            const imgRes = await axiosPublic.post(image_hosting_api, imageFile, {
+                headers: { 'content-type': 'multipart/form-data' }
+            });
+
+            if (imgRes.data.success) {
+                const applicationData = {
+                    ...data,
+                    portfolio: imgRes.data.data.url, // Use the uploaded image URL
+                    email: user?.email,
+                    photo: user?.photoURL,
+                    currentRole: 'user',
+                };
+
+                const res = await axiosSecure.post('/applications', applicationData);
+                if (res.data.insertedId) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Application submitted successfully!",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    reset();
+                } else if (res.data.message === 'Already applied') {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "You have already submitted an application.",
+                    });
+                }
             }
         } catch (error) {
             Swal.fire({
@@ -87,14 +101,13 @@ const BecomeDecorator = () => {
                                 />
                             </div>
 
-                            {/* Portfolio Link */}
+                            {/* Portfolio Image Upload */}
                             <div className="form-control">
-                                <label className="label font-medium text-gray-600">Portfolio URL</label> <br />
+                                <label className="label font-medium text-gray-600">Best Work Sample (Image)</label> <br />
                                 <input
-                                    type="url"
-                                    placeholder="https://yourportfolio.com"
-                                    {...register("portfolio", { required: "Portfolio link is required" })}
-                                    className="input input-bordered"
+                                    type="file"
+                                    {...register("portfolio", { required: "Portfolio image is required" })}
+                                    className="file-input file-input-bordered w-full"
                                 />
                                 {errors.portfolio && <p className="text-red-500 text-sm mt-1">{errors.portfolio.message}</p>}
                             </div>

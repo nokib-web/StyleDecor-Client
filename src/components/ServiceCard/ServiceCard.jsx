@@ -2,11 +2,11 @@ import React from "react";
 import { Link } from "react-router";
 import { FaStar, FaClock, FaUserTie } from "react-icons/fa";
 
-const ServiceCard = ({ service }) => {
+const ServiceCard = ({ service, onToggleCompare, isSelected }) => {
     const { _id, title, image, description, price, rating, serviceProvider, deliveryTime, isFeatured } = service;
 
     return (
-        <div className="card bg-base-100 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 group">
+        <div className={`card bg-base-100 shadow-md hover:shadow-xl transition-all duration-300 border ${isSelected ? 'border-primary ring-2 ring-primary ring-offset-2' : 'border-gray-100'} group relative`}>
             <figure className="relative h-48 overflow-hidden">
                 <img
                     src={image}
@@ -21,6 +21,21 @@ const ServiceCard = ({ service }) => {
                 {rating && (
                     <div className="absolute top-2 left-2 badge badge-warning gap-1 shadow-sm">
                         <FaStar className="text-white" /> {rating}
+                    </div>
+                )}
+
+                {/* Compare Checkbox */}
+                {onToggleCompare && (
+                    <div className="absolute bottom-2 right-2">
+                        <label className="label cursor-pointer bg-white/90 backdrop-blur-sm px-2 py-1 rounded-lg shadow-sm hover:bg-white transition-colors">
+                            <span className="label-text text-xs font-bold mr-2 text-gray-700">Compare</span>
+                            <input
+                                type="checkbox"
+                                className="checkbox checkbox-xs checkbox-primary"
+                                checked={isSelected || false}
+                                onChange={() => onToggleCompare(service)}
+                            />
+                        </label>
                     </div>
                 )}
             </figure>

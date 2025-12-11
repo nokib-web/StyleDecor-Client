@@ -1,12 +1,13 @@
-import React from 'react';
-import { FaHome, FaUsers, FaCalendarAlt, FaChartPie, FaPaintBrush } from 'react-icons/fa';
-import {  FiMenu } from 'react-icons/fi';
+import React, { useState } from 'react';
+import { FaHome, FaUsers, FaCalendarAlt, FaChartPie, FaPaintBrush, FaImages } from 'react-icons/fa';
+import { FiMenu } from 'react-icons/fi';
 import { MdOutlineMiscellaneousServices, MdPayment } from 'react-icons/md';
 import { Link, NavLink, Outlet } from 'react-router';
 import useRole from '../hooks/useRole';
 
 const DashboardLayout = () => {
     const { role, loading } = useRole();
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
     if (loading) {
         return <div className="flex justify-center items-center h-screen"><span className="loading loading-spinner loading-lg"></span></div>;
@@ -27,6 +28,7 @@ const DashboardLayout = () => {
                 <>
                     <li><NavLink to="/dashboard/assigned-projects"><FaPaintBrush /> Assigned Projects</NavLink></li>
                     <li><NavLink to="/dashboard/decorator-earnings"><MdPayment /> Earnings</NavLink></li>
+                    <li><NavLink to="/dashboard/my-portfolio"><FaImages /> My Portfolio</NavLink></li>
                 </>
             );
         } else {
@@ -35,6 +37,7 @@ const DashboardLayout = () => {
                 <>
                     <li><NavLink to="/dashboard/profile"><FaHome /> Profile</NavLink></li>
                     <li><NavLink to="/dashboard/bookings"><FaCalendarAlt /> My Bookings</NavLink></li>
+                    <li><NavLink to="/dashboard/wishlist"><FaCalendarAlt /> My Wishlist</NavLink></li>
                     <li><NavLink to="/dashboard/payment-history"><MdPayment /> Payment History</NavLink></li>
                 </>
             );
@@ -42,11 +45,11 @@ const DashboardLayout = () => {
     };
 
     return (
-        <div className="drawer max-w-7xl mx-auto lg:drawer-open">
+        <div className={`drawer max-w-7xl mx-auto ${isSidebarOpen ? 'lg:drawer-open' : ''}`}>
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col bg-canvas">
                 {/* Navbar for mobile */}
-                <div className="w-full navbar bg-surface lg:hidden border-b border-border">
+                <div className="w-full navbar bg-surface lg:hidden border-b border-border sticky top-0 z-50">
                     <div className="flex-none">
                         <label htmlFor="my-drawer-2" className="btn btn-square btn-ghost text-text-primary">
                             <FiMenu className="text-xl" />
@@ -56,7 +59,10 @@ const DashboardLayout = () => {
                 </div>
 
                 {/* Desktop Top Bar */}
-                <div className="hidden lg:flex w-full bg-surface h-16 items-center px-8 shadow-sm border-b border-border">
+                <div className="hidden lg:flex w-full bg-surface h-16 items-center px-8 shadow-sm border-b border-border gap-4 sticky top-0 z-50">
+                    <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="btn btn-square btn-ghost text-text-primary">
+                        <FiMenu className="text-xl" />
+                    </button>
                     <h1 className="text-xl font-bold text-text-primary">StyleDecor Dashboard</h1>
                 </div>
 

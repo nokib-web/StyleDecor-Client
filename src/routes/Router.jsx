@@ -11,6 +11,7 @@ import ServiceDetails from "../pages/Services/ServiceDetails";
 import Coverage from "../pages/Coverage/Coverage";
 import UserProfile from "../pages/Dashboard/User/UserProfile";
 import MyBookings from "../pages/Dashboard/User/MyBookings";
+import MyWishlist from "../pages/Dashboard/User/MyWishlist";
 import PaymentHistory from "../pages/Dashboard/User/PaymentHistory";
 import Payment from "../pages/Dashboard/User/Payment/Payment";
 import PaymentSuccess from "../pages/Dashboard/User/Payment/PaymentSuccess";
@@ -22,6 +23,9 @@ import ManageBookings from "../pages/Dashboard/Admin/ManageBookings";
 import AdminAnalytics from "../pages/Dashboard/Admin/AdminAnalytics";
 import AssignedProjects from "../pages/Dashboard/Decorator/AssignedProjects";
 import DecoratorEarnings from "../pages/Dashboard/Decorator/DecoratorEarnings";
+import MyPortfolio from "../pages/Dashboard/Decorator/MyPortfolio";
+import Gallery from "../pages/Gallery/Gallery";
+import StyleQuiz from "../pages/StyleQuiz/StyleQuiz";
 import BecomeDecorator from "../pages/BecomeDecorator/BecomeDecorator";
 import About from "../pages/About/About";
 import Contact from "../pages/Contact/Contact";
@@ -43,7 +47,14 @@ const router = createBrowserRouter([
             {
                 path: 'services',
                 Component: Services
-
+            },
+            {
+                path: 'gallery',
+                Component: Gallery
+            },
+            {
+                path: 'style-quiz',
+                Component: StyleQuiz
             },
             {
                 path: 'services/:id',
@@ -98,6 +109,10 @@ const router = createBrowserRouter([
                 Component: MyBookings
             },
             {
+                path: 'wishlist',
+                Component: MyWishlist
+            },
+            {
                 path: 'payment/:bookingId',
                 Component: Payment
             },
@@ -144,6 +159,10 @@ const router = createBrowserRouter([
             {
                 path: 'decorator-earnings',
                 element: <DecoratorRoute><DecoratorEarnings /></DecoratorRoute>
+            },
+            {
+                path: 'my-portfolio',
+                element: <DecoratorRoute><MyPortfolio /></DecoratorRoute>
             },
 
         ]

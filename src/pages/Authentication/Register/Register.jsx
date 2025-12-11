@@ -45,13 +45,14 @@ const Register = () => {
                                 email: data.email,
                                 displayName: data.name,
                                 photoURL: photoURL,
+                                referralCodeInput: data.referralCode,
                             }
                             axiosSecure.post('/users', userInfo)
-                            .then(res=>{
-                                if(res.data.insertedId){
-                                    console.log('user created in the database',)
-                                }
-                            })
+                                .then(res => {
+                                    if (res.data.insertedId) {
+                                        console.log('user created in the database',)
+                                    }
+                                })
 
                             // 1: update user profile with name and photo to firebase
                             const userProfile = {
@@ -108,6 +109,10 @@ const Register = () => {
                     {errors.password?.type === "required" && <span className="text-red-600">Password is required</span>}
                     {errors.password?.type === "minLength" && <span className="text-red-600">Password must be 6 characters or longer</span>}
                     {errors.password?.type === "pattern" && <span className="text-red-600">Password must have one uppercase, one number and one special character</span>}
+
+                    {/* referral (optional) */}
+                    <label className="label">Referral Code (Optional)</label>
+                    <input type="text" {...register("referralCode")} className="input" placeholder="Referral Code" />
 
 
                     <button className="btn btn-neutral mt-4">Register</button>

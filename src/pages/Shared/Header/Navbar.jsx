@@ -3,13 +3,27 @@ import { Link, NavLink, useNavigate } from 'react-router';
 import Logo from '../../../components/Logo/Logo';
 import { useQueryClient } from '@tanstack/react-query';
 import useAuth from '../../../hooks/useAuth';
-import { FiUser, FiLogOut, FiGrid, FiMenu, FiX } from 'react-icons/fi';
+// Imports updated to include Icons for theme
+import { FiUser, FiLogOut, FiGrid, FiMenu, FiX, FiMoon, FiSun } from 'react-icons/fi';
+import { useEffect } from 'react';
 
 const Navbar = () => {
     const { user, signOutUser } = useAuth();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    // --- DARK MODE LOGIC ---
+    const [theme, setTheme] = useState(localStorage.getItem('theme') ? localStorage.getItem('theme') : 'light');
+
+    useEffect(() => {
+        localStorage.setItem('theme', theme);
+        document.querySelector('html').setAttribute('data-theme', theme);
+    }, [theme]);
+
+    const handleToggleTheme = () => {
+        setTheme(prev => prev === 'light' ? 'dark' : 'light');
+    };
 
     // --- LOGOUT FUNCTION ---
     const handleLogout = async () => {
@@ -38,94 +52,108 @@ const Navbar = () => {
         { path: '/', label: 'Home' },
         { path: '/about', label: 'About' },
         { path: '/services', label: 'Services' },
+        { path: '/gallery', label: 'Gallery' },
         { path: '/coverage', label: 'Coverage' },
         { path: '/contact', label: 'Contact' },
     ];
 
     return (
-        <div className="sticky top-0 z-50 bg-surface/95 backdrop-blur-md shadow-sm border-b border-border">
-            <div className="navbar max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-                <div className="navbar-start">
-                    {/* Mobile Menu Toggle */}
-                    <button
-                        onClick={() => setIsSidebarOpen(true)}
-                        className="btn btn-ghost btn-circle lg:hidden text-text-primary hover:bg-primary-light"
-                    >
-                        <FiMenu className="h-7 w-7" />
-                    </button>
+        <>
+            <div className="sticky top-0 z-50 bg-base-100/95 backdrop-blur-md shadow-sm border-b border-base-200">
+                <div className="navbar max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                    <div className="navbar-start">
+                        {/* Mobile Menu Toggle */}
+                        <button
+                            onClick={() => setIsSidebarOpen(true)}
+                            className="btn btn-ghost btn-circle lg:hidden text-base-content hover:bg-base-200"
+                        >
+                            <FiMenu className="h-7 w-7" />
+                        </button>
 
-                    <div className="px-2 hover:bg-transparent cursor-pointer">
-                        <Logo />
+                        <div className="px-2 hover:bg-transparent cursor-pointer">
+                            <Logo />
+                        </div>
                     </div>
-                </div>
 
-                {/* Desktop Menu */}
-                <div className="navbar-center hidden lg:flex">
-                    <ul className="flex items-center gap-8">
-                        {navItems.map((item) => (
-                            <li key={item.path}>
-                                <NavLink to={item.path} className={getLinkClass}>
-                                    {item.label}
-                                </NavLink>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-
-                <div className="navbar-end gap-3">
-                    {user ? (
-                        <div className="dropdown dropdown-end">
-                            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar online ring-2 ring-primary ring-offset-2 ring-offset-base-100 h-10 w-10">
-                                <div className="w-10 rounded-full">
-                                    <img
-                                        alt="User Avatar"
-                                        src={user?.photoURL || "https://placehold.co/100"}
-                                    />
-                                </div>
-                            </div>
-                            <ul
-                                tabIndex={0}
-                                className="menu menu-sm dropdown-content bg-white rounded-box z-1 mt-4 w-52 p-2 shadow-xl border border-gray-100"
-                            >
-                                <div className="px-4 py-3 border-b border-gray-100 mb-2">
-                                    <p className="font-semibold text-gray-800 truncate">{user.displayName || 'User'}</p>
-                                    <p className="text-xs text-gray-500 truncate">{user.email}</p>
-                                </div>
-                                <li>
-                                    <NavLink to="/dashboard" className="flex items-center gap-2 py-2 hover:text-primary">
-                                        <FiGrid /> Dashboard
+                    {/* Desktop Menu */}
+                    <div className="navbar-center hidden lg:flex">
+                        <ul className="flex items-center gap-8">
+                            {navItems.map((item) => (
+                                <li key={item.path}>
+                                    <NavLink to={item.path} className={getLinkClass}>
+                                        {item.label}
                                     </NavLink>
                                 </li>
-                                {!user.role && <li><NavLink to='/become-decorator' className="hover:text-primary">Become a Decorator</NavLink></li>}
+                            ))}
+                        </ul>
+                    </div>
 
-                                <li className="mt-1">
-                                    <button onClick={handleLogout} className="flex items-center gap-2 py-2 text-red-500 hover:bg-red-50 hover:text-red-600">
-                                        <FiLogOut /> Logout
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                    ) : (
-                        <div className="flex items-center gap-3">
-                            <Link to="/login" className="btn btn-ghost text-gray-700 font-medium hover:text-primary">
-                                Login
-                            </Link>
-                            <Link to="/register" className="btn btn-primary text-white px-6 rounded-full shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all transform hover:-translate-y-0.5">
-                                Join Now
-                            </Link>
-                        </div>
-                    )}
+                    <div className="navbar-end gap-3">
+                        <Link to="/style-quiz" className="hidden md:flex btn btn-ghost btn-sm bg-gradient-to-r from-pink-500 to-violet-500 text-white hover:from-pink-600 hover:to-violet-600 rounded-full px-4 border-none shadow-md animate-pulse">
+                            ✨ AI Style Quiz
+                        </Link>
+
+                        {/* Theme Toggle */}
+                        <button onClick={handleToggleTheme} className="btn btn-ghost btn-circle text-xl">
+                            {theme === 'light' ? <FiMoon /> : <FiSun />}
+                        </button>
+
+                        {user ? (
+                            <div className="dropdown dropdown-end">
+                                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar online ring-2 ring-primary ring-offset-2 ring-offset-base-100 h-10 w-10">
+                                    <div className="w-10 rounded-full">
+                                        <img
+                                            alt="User Avatar"
+                                            src={user?.photoURL || "https://placehold.co/100"}
+                                        />
+                                    </div>
+                                </div>
+                                <ul
+                                    tabIndex={0}
+                                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-4 w-52 p-2 shadow-xl border border-base-200"
+                                >
+                                    <div className="px-4 py-3 border-b border-base-200 mb-2">
+                                        <p className="font-semibold text-base-content truncate">{user.displayName || 'User'}</p>
+                                        <p className="text-xs text-base-content/70 truncate">{user.email}</p>
+                                    </div>
+                                    <li>
+                                        <NavLink to="/dashboard" className="flex items-center gap-2 py-2 hover:text-primary">
+                                            <FiGrid /> Dashboard
+                                        </NavLink>
+                                    </li>
+                                    {!user.role && <li><NavLink to='/become-decorator' className="hover:text-primary">Become a Decorator</NavLink></li>}
+
+                                    <li className="mt-1">
+                                        <button onClick={handleLogout} className="flex items-center gap-2 py-2 text-red-500 hover:bg-red-50 hover:text-red-600">
+                                            <FiLogOut /> Logout
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        ) : (
+                            <div className="flex items-center gap-3">
+                                <Link to="/login" className="btn btn-ghost text-base-content hover:text-primary">
+                                    Login
+                                </Link>
+                                <Link to="/register" className="btn btn-primary text-white px-6 rounded-full shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all transform hover:-translate-y-0.5">
+                                    Join Now
+                                </Link>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
 
+
             {/* Mobile Sidebar Overlay */}
-            <div
-                className={`fixed inset-0 z-60 bg-black/50 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${isSidebarOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-                    }`}
+            < div
+                className={`fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${isSidebarOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+                    }`
+                }
                 onClick={() => setIsSidebarOpen(false)}
             >
                 {/* Sidebar Content */}
-                <div
+                < div
                     className={`fixed top-0 left-0 w-[85%] max-w-sm h-full bg-white shadow-2xl transition-transform duration-300 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
                         }`}
                     onClick={(e) => e.stopPropagation()}
@@ -166,6 +194,14 @@ const Navbar = () => {
                                 </NavLink>
                             ))}
 
+                            <NavLink
+                                to="/style-quiz"
+                                className="block px-6 py-4 text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500 hover:text-pink-600 transition-all border-l-4 border-transparent hover:border-pink-500"
+                                onClick={() => setIsSidebarOpen(false)}
+                            >
+                                ✨ AI Style Quiz
+                            </NavLink>
+
                             {user ? (
                                 <>
                                     <div className="divider px-6 my-2">Account</div>
@@ -203,9 +239,9 @@ const Navbar = () => {
                             )}
                         </nav>
                     </div>
-                </div>
-            </div>
-        </div>
+                </div >
+            </div >
+        </>
     );
 };
 
