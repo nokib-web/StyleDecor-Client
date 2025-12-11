@@ -76,26 +76,56 @@ const MyBookings = () => {
                                         <div>
                                             <div className="font-bold">{booking.serviceName}</div>
                                             <div className="text-sm opacity-50">{new Date(booking.date).toLocaleDateString()}</div>
+                                            {/* Show Addons Tag */}
+                                            {booking.addOns && booking.addOns.length > 0 && (
+                                                <div className="flex flex-wrap gap-1 mt-1">
+                                                    {booking.addOns.map((addon, idx) => (
+                                                        <span key={idx} className="badge badge-xs badge-outline">{addon.name}</span>
+                                                    ))}
+                                                </div>
+                                            )}
+                                            {booking.discountApplied && booking.discountApplied !== "0%" && (
+                                                <span className="badge badge-sm badge-secondary ml-1">-{booking.discountApplied}</span>
+                                            )}
                                         </div>
                                     </div>
                                 </td>
                                 <td>
                                     <BookingTracking status={booking.status} />
                                 </td>
+
+                                {/* Price Column */}
+                                <td className="font-semibold">
+                                    <div className="flex flex-col">
+                                        <span>${booking.price}</span>
+                                        {booking.originalPrice > booking.price && (
+                                            <span className="text-xs text-gray-400 line-through">${booking.originalPrice}</span>
+                                        )}
+                                    </div>
+                                </td>
+
+                                {/* Action Column */}
                                 <td>
-                                    {booking.status === 'pending' && (
-                                        <button
-                                            onClick={() => handleCancel(booking._id)}
-                                            className="btn btn-sm btn-error text-white mr-2"
-                                        >
-                                            Cancel
-                                        </button>
-                                    )}
-                                    {booking.price && booking.status !== 'paid' && (
-                                        <Link to={`/dashboard/payment/${booking._id}`} state={{ booking: booking }}>
-                                            <button className="btn btn-sm btn-primary">Pay</button>
-                                        </Link>
-                                    )}
+                                    <div className="flex gap-2">
+                                        {booking.status === 'pending' && (
+                                            <button
+                                                onClick={() => handleCancel(booking._id)}
+                                                className="btn btn-sm btn-error text-white"
+                                            >
+                                                Cancel
+                                            </button>
+                                        )}
+
+                                        {booking.status !== 'paid' && booking.status !== 'cancelled' && (
+                                            <Link to={`/dashboard/payment/${booking._id}`} state={{ booking: booking }}>
+                                                <button className="btn btn-sm btn-primary">Pay</button>
+                                            </Link>
+                                        )}
+
+                                        {booking.status === 'paid' && (
+                                            <span className="badge badge-success badge-outline">Paid</span>
+                                        )}
+                                    </div>
                                 </td>
                             </tr>
                         ))}

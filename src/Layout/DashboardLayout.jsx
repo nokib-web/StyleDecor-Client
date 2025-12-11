@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaHome, FaUsers, FaCalendarAlt, FaChartPie, FaPaintBrush } from 'react-icons/fa';
-import { FiSettings, FiMenu } from 'react-icons/fi';
+import {  FiMenu } from 'react-icons/fi';
 import { MdOutlineMiscellaneousServices, MdPayment } from 'react-icons/md';
 import { Link, NavLink, Outlet } from 'react-router';
 import useRole from '../hooks/useRole';
@@ -44,20 +44,20 @@ const DashboardLayout = () => {
     return (
         <div className="drawer max-w-7xl mx-auto lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content flex flex-col bg-(--color-canvas)">
+            <div className="drawer-content flex flex-col bg-canvas">
                 {/* Navbar for mobile */}
-                <div className="w-full navbar bg-(--color-surface) lg:hidden border-b border-(--color-border)">
+                <div className="w-full navbar bg-surface lg:hidden border-b border-border">
                     <div className="flex-none">
-                        <label htmlFor="my-drawer-2" className="btn btn-square btn-ghost text-(--color-text-primary)">
+                        <label htmlFor="my-drawer-2" className="btn btn-square btn-ghost text-text-primary">
                             <FiMenu className="text-xl" />
                         </label>
                     </div>
-                    <div className="flex-1 px-2 mx-2 font-bold text-(--color-text-primary)">StyleDecor Dashboard</div>
+                    <div className="flex-1 px-2 mx-2 font-bold text-text-primary">StyleDecor Dashboard</div>
                 </div>
 
                 {/* Desktop Top Bar */}
-                <div className="hidden lg:flex w-full bg-(--color-surface) h-16 items-center px-8 shadow-sm border-b border-(--color-border)">
-                    <h1 className="text-xl font-bold text-(--color-text-primary)">StyleDecor Dashboard</h1>
+                <div className="hidden lg:flex w-full bg-surface h-16 items-center px-8 shadow-sm border-b border-border">
+                    <h1 className="text-xl font-bold text-text-primary">StyleDecor Dashboard</h1>
                 </div>
 
                 <div className="p-8">

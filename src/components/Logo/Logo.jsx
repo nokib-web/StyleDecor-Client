@@ -6,11 +6,11 @@ const Logo = () => {
     return (
         <Link to='/' className="flex items-center gap-2 group">
             {/* Icon with Primary Gold Color */}
-            <FaPaintRoller className="w-6 h-6 text-[var(--color-primary)] group-hover:text-[var(--color-accent)] transition-colors duration-300 drop-shadow-sm" />
+            <FaPaintRoller className="w-6 h-6 text-primary group-hover:text-accent transition-colors duration-300 drop-shadow-sm" />
 
             <div className="flex flex-col">
-                <span className="text-2xl font-bold text-[var(--color-text-primary)] tracking-tight group-hover:text-[var(--color-primary)] transition-colors duration-300">
-                    Style<span className="text-[var(--color-primary)]">Decor</span>
+                <span className="text-2xl font-bold text-text-primary tracking-tight group-hover:text-primary transition-colors duration-300">
+                    Style<span className="text-primary">Decor</span>
                 </span>
             </div>
         </Link>

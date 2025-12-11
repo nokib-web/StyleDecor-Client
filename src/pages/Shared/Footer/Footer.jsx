@@ -10,7 +10,7 @@ const Footer = () => {
       <footer className="footer max-w-7xl mx-auto sm:footer-horizontal bg-base-200 text-base-content p-10">
         <aside>
           <Logo />
-          <p className="mt-4 max-w-xs leading-relaxed text-gray-500">
+          <p className="mt-4 max-w-xs leading-relaxed ">
             Transforming spaces into timeless masterpieces. Your trusted partner in compassionate and reliable interior design.
           </p>
         </aside>
@@ -43,6 +43,15 @@ const Footer = () => {
 
 
 
+        </nav>
+
+        <nav>
+          <h6 className="footer-title">Business Hours</h6>
+          <ul className="space-y-2 text-sm ">
+            <li>Sun - Thu: 09:00 AM - 08:00 PM</li>
+            <li>Saturday: 10:00 AM - 06:00 PM</li>
+            <li>Friday: Closed</li>
+          </ul>
         </nav>
         <nav>
           <div >

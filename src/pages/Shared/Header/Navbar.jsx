@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router';
 import Logo from '../../../components/Logo/Logo';
 import { useQueryClient } from '@tanstack/react-query';
@@ -22,16 +22,16 @@ const Navbar = () => {
         }
     };
 
-    // Active Link Class - Consuming Global Variables
+    // Active Link Class - Simplified
     const getLinkClass = ({ isActive }) =>
         isActive
-            ? "text-[var(--color-primary)] font-bold border-b-2 border-[var(--color-primary)] pb-1 transition-all duration-300"
-            : "text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] font-medium transition-all duration-300 hover:pb-1";
+            ? "text-primary font-bold border-b-2 border-primary pb-1 transition-all duration-300"
+            : "text-text-secondary hover:text-primary font-medium transition-all duration-300 hover:pb-1";
 
     const sidebarLinkClass = ({ isActive }) =>
         isActive
-            ? "block px-6 py-4 text-xl font-bold text-[var(--color-primary)] bg-[var(--color-primary-light)]/20 border-l-4 border-[var(--color-primary)]"
-            : "block px-6 py-4 text-xl font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] hover:bg-[var(--color-surface-2)] transition-all";
+            ? "block px-6 py-4 text-xl font-bold text-primary bg-primary-light/20 border-l-4 border-primary"
+            : "block px-6 py-4 text-xl font-medium text-text-secondary hover:text-primary hover:bg-surface-2 transition-all";
 
     // --- NAV LINKS ---
     const navItems = [
@@ -43,13 +43,13 @@ const Navbar = () => {
     ];
 
     return (
-        <div className="sticky top-0 z-50 bg-[var(--color-surface)]/95 backdrop-blur-md shadow-sm border-b border-[var(--color-border)]">
+        <div className="sticky top-0 z-50 bg-surface/95 backdrop-blur-md shadow-sm border-b border-border">
             <div className="navbar max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 <div className="navbar-start">
                     {/* Mobile Menu Toggle */}
                     <button
                         onClick={() => setIsSidebarOpen(true)}
-                        className="btn btn-ghost btn-circle lg:hidden text-[var(--color-text-primary)] hover:bg-[var(--color-primary-light)]"
+                        className="btn btn-ghost btn-circle lg:hidden text-text-primary hover:bg-primary-light"
                     >
                         <FiMenu className="h-7 w-7" />
                     </button>
@@ -85,7 +85,7 @@ const Navbar = () => {
                             </div>
                             <ul
                                 tabIndex={0}
-                                className="menu menu-sm dropdown-content bg-white rounded-box z-[1] mt-4 w-52 p-2 shadow-xl border border-gray-100"
+                                className="menu menu-sm dropdown-content bg-white rounded-box z-1 mt-4 w-52 p-2 shadow-xl border border-gray-100"
                             >
                                 <div className="px-4 py-3 border-b border-gray-100 mb-2">
                                     <p className="font-semibold text-gray-800 truncate">{user.displayName || 'User'}</p>
@@ -120,7 +120,7 @@ const Navbar = () => {
 
             {/* Mobile Sidebar Overlay */}
             <div
-                className={`fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${isSidebarOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+                className={`fixed inset-0 z-60 bg-black/50 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${isSidebarOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
                     }`}
                 onClick={() => setIsSidebarOpen(false)}
             >

@@ -8,33 +8,33 @@ import useAuth from '../../../hooks/useAuth';
 const Login = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const {signInUser, forgotPassword}= useAuth();
+    const { signInUser, forgotPassword } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
 
     const handleLogin = data => {
         console.log('login data', data);
         signInUser(data.email, data.password)
-        .then(result => {
-            const user = result.user;
-            navigate(location?.state || '/', {replace: true});
-            console.log(user);
-        })
-        .catch(error => {
-            console.log(error.message);
-        });
+            .then(result => {
+                const user = result.user;
+                navigate(location?.state?.from || '/', { replace: true });
+                console.log(user);
+            })
+            .catch(error => {
+                console.log(error.message);
+            });
     }
 
     const handleForgotPassword = () => {
         const email = prompt("Please enter your email for password reset:");
         if (email) {
             forgotPassword(email)
-            .then(() => {
-                alert("Password reset email sent!");
-            })
-            .catch(error => {
-                console.log(error.message);
-            });
+                .then(() => {
+                    alert("Password reset email sent!");
+                })
+                .catch(error => {
+                    console.log(error.message);
+                });
         }
     }
 
@@ -60,7 +60,7 @@ const Login = () => {
                     <div><a onClick={handleForgotPassword} className="link link-hover">Forgot password?</a></div>
                     <button className="btn btn-neutral mt-4">Login</button>
                 </fieldset>
-                <p>New to StyleDecor? <Link state={location.state}  to="/register" className="link text-blue-800 link-hover">Register here</Link></p>
+                <p>New to StyleDecor? <Link state={location.state} to="/register" className="link text-blue-800 link-hover">Register here</Link></p>
             </form>
             <SocialLogin />
         </div>

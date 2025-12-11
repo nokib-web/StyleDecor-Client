@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router";
+import { useParams, useNavigate, useLocation } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 // import axios from "axios";
 import { FaTag, FaTools, FaCheckCircle, FaMapMarkerAlt, FaShieldAlt, FaClock, FaUserTie } from "react-icons/fa";
@@ -12,7 +12,42 @@ const ServiceDetails = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
+    const currentLocation = useLocation();
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // --- Bonus Features State ---
+    const [couponCode, setCouponCode] = useState("");
+    const [isCouponApplied, setIsCouponApplied] = useState(false);
+    const [selectedAddOns, setSelectedAddOns] = useState([]);
+
+    const addOnOptions = [
+        { name: "Extra Floral Arrangements", price: 50 },
+        { name: "Premium Mood Lighting", price: 80 },
+        { name: "Custom Theme Banner", price: 30 }
+    ];
+
+    const handleAddOnToggle = (addOn) => {
+        if (selectedAddOns.some(item => item.name === addOn.name)) {
+            setSelectedAddOns(selectedAddOns.filter(item => item.name !== addOn.name));
+        } else {
+            setSelectedAddOns([...selectedAddOns, addOn]);
+        }
+    };
+
+    const handleApplyCoupon = () => {
+        if (couponCode === "STYLE20") {
+            setIsCouponApplied(true);
+            Swal.fire("Success", "Coupon Applied! You saved 20%", "success");
+        } else {
+            Swal.fire("Invalid Coupon", "Try using STYLE20", "warning");
+        }
+    };
+
+    // Derived Calculations
+    // Note: 'service' is derived later, so we need to be careful. Ideally these logic should be after 'service' definition.
+    // However, since they rely on 'service' which is available in render scope, we can define calculation functions here 
+    // but they will need 'service' to be available. 
+    // Moving handleBookingSubmit and these helpers AFTER 'service' definition in next step.
 
     // Fetch single service by ID
     // Renamed 'data' to 'serviceData' for clarity
@@ -30,6 +65,18 @@ const ServiceDetails = () => {
     const service = serviceData?.data;
     console.log("ServiceData:", serviceData);
     console.log("Derived Service:", service);
+
+    // --- Calculation Helpers ---
+    const calculateTotal = () => {
+        const basePrice = service?.price || 0;
+        const addOnsPrice = selectedAddOns.reduce((acc, curr) => acc + curr.price, 0);
+        return basePrice + addOnsPrice;
+    };
+
+    const calculateDiscountedTotal = () => {
+        const total = calculateTotal();
+        return isCouponApplied ? total * 0.8 : total;
+    };
 
     const handleBookingSubmit = async (e) => {
         e.preventDefault();
@@ -50,7 +97,11 @@ const ServiceDetails = () => {
             serviceId: id,
             serviceName: service?.title,
             serviceImage: service?.image,
-            price: service?.price,
+            price: calculateDiscountedTotal(), // Use final discounted price
+            originalPrice: calculateTotal(),
+            discountApplied: isCouponApplied ? "20%" : "0%",
+            addOns: selectedAddOns,
+
             userEmail: user.email,
             userName: user.displayName,
             address,
@@ -246,7 +297,7 @@ const ServiceDetails = () => {
 
                         {/* Booking Button */}
                         <button
-                            onClick={() => user ? setIsModalOpen(true) : navigate('/login')}
+                            onClick={() => user ? setIsModalOpen(true) : navigate('/login', { state: { from: currentLocation } })}
                             className="btn btn-primary btn-lg w-full shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all transform hover:-translate-y-1"
                         >
                             Book This Service
@@ -274,7 +325,7 @@ const ServiceDetails = () => {
             {/* Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm p-4">
-                    <div className="bg-white p-6 rounded-2xl w-full max-w-md relative shadow-2xl animate-fade-in-up">
+                    <div className="bg-white p-6 rounded-2xl w-full max-w-md relative shadow-2xl animate-fade-in-up max-h-[90vh] overflow-y-auto">
                         <button
                             onClick={() => setIsModalOpen(false)}
                             className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4 text-gray-500"
@@ -283,24 +334,32 @@ const ServiceDetails = () => {
                         </button>
                         <h3 className="font-bold text-2xl mb-6 text-gray-800 border-b pb-4">Confirm Booking</h3>
                         <form onSubmit={handleBookingSubmit} className="space-y-4">
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text font-medium">Service Name</span>
-                                </label>
-                                <input type="text" value={title} disabled className="input input-bordered bg-gray-50 font-semibold text-gray-700" />
-                            </div>
                             <div className="grid grid-cols-2 gap-4">
+                                <div className="form-control">
+                                    <label className="label">
+                                        <span className="label-text font-medium">Service Name</span>
+                                    </label>
+                                    <input type="text" value={title} disabled className="input input-bordered bg-gray-50 font-semibold text-gray-700" />
+                                </div>
                                 <div className="form-control">
                                     <label className="label">
                                         <span className="label-text font-medium">Price</span>
                                     </label>
                                     <input type="text" value={`$${price}`} disabled className="input input-bordered bg-gray-50 font-bold text-primary" />
                                 </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
                                 <div className="form-control">
                                     <label className="label">
                                         <span className="label-text font-medium">User</span>
                                     </label>
                                     <input type="text" value={user?.displayName || 'User'} disabled className="input input-bordered bg-gray-50" />
+                                </div>
+                                <div className="form-control">
+                                    <label className="label">
+                                        <span className="label-text font-medium">Email</span>
+                                    </label>
+                                    <input type="email" value={user?.email || ''} disabled className="input input-bordered bg-gray-50" />
                                 </div>
                             </div>
 
@@ -339,8 +398,64 @@ const ServiceDetails = () => {
                                 </label>
                                 <input type="text" name="address" placeholder="Enter your full address" required className="input input-bordered focus:input-primary" />
                             </div>
+
+                            {/* Service Add-ons */}
+                            <div className="form-control bg-base-100 p-3 rounded-lg border border-base-200">
+                                <label className="label">
+                                    <span className="label-text font-medium flex items-center gap-2"><FaTag className="text-accent" /> Service Add-ons</span>
+                                </label>
+                                <div className="space-y-2">
+                                    {addOnOptions.map((addOn, index) => (
+                                        <label key={index} className="label cursor-pointer justify-start gap-3">
+                                            <input
+                                                type="checkbox"
+                                                className="checkbox checkbox-primary checkbox-sm"
+                                                checked={selectedAddOns.some(item => item.name === addOn.name)}
+                                                onChange={() => handleAddOnToggle(addOn)}
+                                            />
+                                            <span className="label-text">{addOn.name} (+$ {addOn.price})</span>
+                                        </label>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Coupon Code */}
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text font-medium">Have a Coupon?</span>
+                                </label>
+                                <div className="join">
+                                    <input
+                                        type="text"
+                                        className="input input-bordered join-item w-full"
+                                        placeholder="Promo Code (Try STYLE20)"
+                                        value={couponCode}
+                                        onChange={(e) => setCouponCode(e.target.value)}
+                                        disabled={isCouponApplied}
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={handleApplyCoupon}
+                                        className="btn btn-secondary join-item"
+                                        disabled={isCouponApplied}
+                                    >
+                                        Apply
+                                    </button>
+                                </div>
+                                {isCouponApplied && <p className="text-green-600 text-sm mt-1">✓ 20% Discount Applied!</p>}
+                            </div>
+
+                            {/* Final Price Summary */}
+                            <div className="flex justify-between items-center text-lg font-bold border-t pt-2">
+                                <span>Total:</span>
+                                <div>
+                                    {isCouponApplied && <span className="text-gray-400 line-through text-sm mr-2">${calculateTotal().toFixed(2)}</span>}
+                                    <span className="text-primary">${calculateDiscountedTotal().toFixed(2)}</span>
+                                </div>
+                            </div>
+
                             <div className="modal-action pt-4">
-                                <button type="submit" className="btn btn-primary w-full">Confirm & Book</button>
+                                <button type="submit" className="btn btn-primary w-full">Confirm & Book (${calculateDiscountedTotal().toFixed(2)})</button>
                             </div>
                         </form>
                     </div>

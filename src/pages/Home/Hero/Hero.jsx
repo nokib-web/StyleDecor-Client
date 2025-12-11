@@ -6,7 +6,7 @@ const Hero = () => {
     return (
         <div className="hero min-h-[50vh]  relative overflow-hidden" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1620626013444-4860ced065ee?q=80&w=2600&auto=format&fit=crop)' }}>
             {/* Gradient Overlay: Primary Gold / Charcoal Mix */}
-            <div className="hero-overlay bg-gradient-to-r from-[var(--color-primary)]/70 via-[var(--color-primary-dark)]/80 to-[var(--color-primary-dark)]/95"></div>
+            <div className="hero-overlay bg-gradient-to-r from-primary/70 via-primary-dark/80 to-primary-dark/95"></div>
             <div className="hero-content text-center text-neutral-content z-10">
                 <div className="max-w-md">
                     <motion.h1
@@ -15,7 +15,7 @@ const Hero = () => {
                         transition={{ duration: 0.8 }}
                         className="mb-5 text-5xl lg:text-7xl font-bold font-serif leading-tight text-white drop-shadow-md"
                     >
-                        Style Your <span className="text-[var(--color-primary)] drop-shadow-xl">Dream</span> Event
+                        Style Your <span className="text-primary drop-shadow-xl">Dream</span> Event
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, x: -50 }}

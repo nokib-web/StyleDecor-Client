@@ -1,16 +1,49 @@
-# React + Vite
+# StyleDecor Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Purpose
+StyleDecor Client is the frontend interface for a comprehensive decoration service management platform. It allows users to browse decoration services, book appointments, and make secure payments. It also features dedicated dashboards for users, decorators, and administrators to facilitate efficient service assignments, status tracking, and business management.
 
-Currently, two official plugins are available:
+## Live URL
+[Insert Live URL Here]
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Key Features
+- **User Authentication**: Secure login and registration using Firebase.
+- **Service Booking**: Browsing services and scheduling appointments with specific dates and slots.
+- **Secure Payments**: Integrated Stripe payment system for safe transactions.
+- **Role-Based Dashboards**:
+  - **User**: Manage bookings and view payment history.
+  - **Decorator**: View assigned projects, track status (Planning, On-way, Setup, etc.), and coordinate on-site.
+  - **Admin**: Manage services, approve decorators, and assign bookings.
+- **Interactive UI**: Responsive design with animations and modern aesthetics.
+- **Data Visualization**: Charts and analytics for admin insights.
 
-## React Compiler
+## Bonus Features (New!)
+- **Ticket/Coupon System**: Apply promo codes (e.g., `STYLE20`) for discounts during booking.
+- **Service Add-ons**: Customize bookings with extras like "Floral Arrangements" or "Mood Lighting".
+- **SMS Notifications (Mock)**: Visual simulation of SMS alerts sent to customers upon status updates.
+- **Smart Validation**: Enhanced form checks for booking integrity.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Future Roadmap (Planned)
+- **Multi-location Business Support**: Managing different branches and inventory.
+- **Subscription Packages**: Recurring decoration services for corporate clients.
+- **AI-Based Recommendations**: Smart suggestions for decor styles based on user preferences.
+- **Multiple Decorators**: Assigning teams to large-scale events.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## NPM Packages Used
+- **@stripe/react-stripe-js**: ^5.4.1
+- **@stripe/stripe-js**: ^8.5.3
+- **@tailwindcss/vite**: ^4.1.17
+- **@tanstack/react-query**: ^5.90.12
+- **axios**: ^1.13.2
+- **daisyui**: ^5.5.8
+- **firebase**: ^12.6.0
+- **framer-motion**: ^12.23.25
+- **react**: ^19.2.0
+- **react-dom**: ^19.2.0
+- **react-hook-form**: ^7.68.0
+- **react-icons**: ^5.5.0
+- **react-leaflet**: ^5.0.0
+- **react-router**: ^7.10.1
+- **recharts**: ^3.5.1
+- **swiper**: ^12.0.3
+- **tailwindcss**: ^4.1.17

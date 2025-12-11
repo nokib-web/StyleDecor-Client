@@ -24,7 +24,7 @@ const FeaturedServices = () => {
         <section className="py-20 bg-base-100">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-12">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-4 font-serif text-gray-800">Our Premium Packages</h2>
+                    <h2 className="text-3xl md:text-4xl font-bold mb-4 font-serif text-primary">Our Premium Packages</h2>
                     <p className="text-gray-600 max-w-2xl mx-auto">Explore our most popular decoration packages designed to make your special moments unforgettable.</p>
                 </div>
 

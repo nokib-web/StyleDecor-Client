@@ -23,7 +23,24 @@ const AssignedProjects = () => {
             .then(res => {
                 if (res.data.modifiedCount > 0) {
                     refetch();
-                    Swal.fire('Updated', `Status changed to ${newStatus}`, 'success');
+                    Swal.fire({
+                        title: 'Updated!',
+                        text: `Status changed to ${newStatus}`,
+                        icon: 'success',
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
+                        // MOCK SMS NOTIFICATION
+                        Swal.fire({
+                            position: 'bottom-end',
+                            icon: 'info',
+                            title: 'SMS Sent',
+                            text: `Customer notified: "Your project is now ${newStatus}"`,
+                            showConfirmButton: false,
+                            timer: 2500,
+                            toast: true
+                        });
+                    });
                 }
             });
     };
