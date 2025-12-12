@@ -132,9 +132,7 @@ const Navbar = () => {
                             </div>
                         ) : (
                             <div className="">
-                                {/* <Link to="/login" className="btn btn-ghost text-base-content hover:text-primary">
-                                    Login
-                                </Link> */}
+                        
                                 <Link to="/register" className="btn btn-primary text-white px-6 rounded-full shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all transform hover:-translate-y-0.5">
                                     Join Now
                                 </Link>

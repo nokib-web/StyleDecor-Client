@@ -15,7 +15,13 @@ const useAxiosSecure = () => {
 
   useEffect(() => {
     const reqInterceptor = axiosSecure.interceptors.request.use(
-      (config) => config,
+      (config) => {
+        const token = localStorage.getItem('accessToken');
+        if (token) {
+          config.headers.authorization = `Bearer ${token}`;
+        }
+        return config;
+      },
       (error) => Promise.reject(error)
     );
 
@@ -27,10 +33,24 @@ const useAxiosSecure = () => {
 
         if ((status === 401 || status === 403) && !originalRequest._retry) {
           originalRequest._retry = true;
+          const refreshToken = localStorage.getItem('refreshToken');
+
+          if (!refreshToken) {
+            await signOutUser();
+            navigate('/login');
+            return Promise.reject(error);
+          }
+
           try {
             const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-            await axios.post(`${baseURL}/auth/refresh-token`, {}, { withCredentials: true });
-            return axiosSecure(originalRequest);
+            // Send refresh token in body
+            const res = await axios.post(`${baseURL}/auth/refresh-token`, { refreshToken });
+            if (res.data.accessToken) {
+              localStorage.setItem('accessToken', res.data.accessToken);
+              // Retry original request with new token
+              originalRequest.headers.authorization = `Bearer ${res.data.accessToken}`;
+              return axiosSecure(originalRequest);
+            }
           } catch (refreshError) {
             console.error('refresh failed', refreshError);
             await signOutUser();

@@ -27,23 +27,31 @@ const AuthProvider = ({ children }) => {
         return createUserWithEmailAndPassword(auth, email, password);
     };
 
-    // Sign In User (email/password) and mint cookies
+    // Sign In User (email/password) and get tokens
     const signInUser = async (email, password) => {
         setLoading(true);
         const result = await signInWithEmailAndPassword(auth, email, password);
         const idToken = await result.user.getIdToken();
-        // Send to backend to mint cookies
-        await axios.post('https://style-decor-server-mkbq.onrender.com/auth/firebase-login', { idToken }, { withCredentials: true });
+        // Send to backend to get accessToken/refreshToken
+        const res = await axios.post('https://style-decor-server-mkbq.onrender.com/auth/firebase-login', { idToken });
+        if (res.data.accessToken) {
+            localStorage.setItem('accessToken', res.data.accessToken);
+            localStorage.setItem('refreshToken', res.data.refreshToken);
+        }
         setLoading(false);
         return result;
     };
 
-    // Sign In with Google + mint cookies
+    // Sign In with Google + get tokens
     const signInWithGoogle = async () => {
         setLoading(true);
         const result = await signInWithPopup(auth, googleProvider);
         const idToken = await result.user.getIdToken();
-        await axios.post('https://style-decor-server-mkbq.onrender.com/auth/firebase-login', { idToken }, { withCredentials: true });
+        const res = await axios.post('https://style-decor-server-mkbq.onrender.com/auth/firebase-login', { idToken });
+        if (res.data.accessToken) {
+            localStorage.setItem('accessToken', res.data.accessToken);
+            localStorage.setItem('refreshToken', res.data.refreshToken);
+        }
         setLoading(false);
         return result;
     };
@@ -54,10 +62,16 @@ const AuthProvider = ({ children }) => {
         return updateProfile(auth.currentUser, profile);
     };
 
-    // Sign Out User: notify backend to clear refresh token and clear firebase
+    // Sign Out User: clear valid tokens
     const signOutUser = async () => {
         setLoading(true);
-        await axios.post('https://style-decor-server-mkbq.onrender.com/auth/logout', {}, { withCredentials: true });
+        try {
+            await axios.post('https://style-decor-server-mkbq.onrender.com/auth/logout', {});
+        } catch (err) {
+            console.error(err);
+        }
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
         await signOut(auth);
         setLoading(false);
     };
