@@ -88,9 +88,7 @@ const Services = () => {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   // Reset page when filters change
-  useEffect(() => {
-    setCurrentPage(0);
-  }, [debouncedSearch, category, sort, priceRange]);
+
 
   // Sidebar toggle
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
@@ -274,12 +272,11 @@ const Services = () => {
           <div className="p-6 overflow-y-auto h-full pb-32">
             <FiltersSidebar
               category={category}
-              setCategory={setCategory}
+              setCategory={(v) => { setCategory(v); setCurrentPage(0); }}
               sort={sort}
-              setSort={setSort}
+              setSort={(v) => { setSort(v); setCurrentPage(0); }}
               priceRange={priceRange}
-              setPriceRange={setPriceRange}
-              onClose={toggleSidebar}
+              setPriceRange={(v) => { setPriceRange(v); setCurrentPage(0); }}
             />
           </div>
         </div>

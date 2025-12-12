@@ -1,29 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
 @import "tailwindcss";
-@plugin "daisyui";
 
-@theme {
-    --font-sans: "Inter", "system-ui", "sans-serif";
+@plugin "daisyui" {
+    themes: light --default, dark --prefersdark;
+}
 
-    /* BRAND COLORS */
-    --color-primary: #E2A03F;
-    --color-primary-content: #ffffff;
-    --color-primary-dark: #1f2937;
+;
 
-    --color-secondary: #64748B;
-    --color-secondary-content: #ffffff;
+@plugin "daisyui/theme" {
+    name: "light";
+    --color-primary: #4A5A4E;
+    --color-secondary: #6B3A3F;
+    --color-accent: #D9B8B1;
+    --color-base-100: #FFFFFF;
+    --color-base-200: #F0E9E2;
+    --color-base-300: #E0D9D2;
+    --color-success: #81C784;
+    --color-warning: #FFB300;
+    --color-error: #EF5350;
+}
 
-    --color-accent: #A3E635;
-    --color-accent-content: #163835;
+@plugin "daisyui/theme" {
+    name: "dark";
+    --color-primary: #7A8A7E;
+    --color-secondary: #9B6A6F;
+    --color-accent: #E9D8D1;
+    --color-base-100: #1A1614;
+    --color-base-200: #29221E;
+    --color-base-300: #433A34;
+    --color-success: #B2DFB4;
+    --color-warning: #FFD54F;
+    --color-error: #FF8A80;
+}
 
-    /* SURFACE COLORS */
-    --color-base-100: #F8FAFC;
-    --color-base-200: #F1F5F9;
-    --color-base-300: #E2E8F0;
-    --color-base-content: #0F172A;
+body {
+    font-family: 'Urbanist', sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
 
-    /* STATUS COLORS */
-    --color-success: #22C55E;
-    --color-warning: #F59E0B;
-    --color-error: #EF4444;
-    --color-info: #3B82F6;
+.active {
+    @apply font-bold text-primary;
 }

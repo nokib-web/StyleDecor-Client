@@ -89,7 +89,7 @@ const Navbar = () => {
                     </div>
 
                     <div className="navbar-end gap-3">
-                        <Link to="/style-quiz" className="hidden md:flex btn btn-ghost btn-sm bg-gradient-to-r from-pink-500 to-violet-500 text-white hover:from-pink-600 hover:to-violet-600 rounded-full px-4 border-none shadow-md animate-pulse">
+                        <Link to="/style-quiz" className="hidden md:flex btn btn-ghost btn-sm bg-gradient-to-r from-[#4A5A4E] to-[#6B3A3F] text-white hover:from-[#7A8A7E] hover:to-[#9B6A6F] rounded-full px-4 border-none shadow-md animate-pulse">
                             ✨ AI Style Quiz
                         </Link>
 
