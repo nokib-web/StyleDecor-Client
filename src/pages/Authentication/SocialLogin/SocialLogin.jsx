@@ -15,7 +15,8 @@ const SocialLogin = () => {
       const idToken = await result.user.getIdToken();
 
       // Send idToken to server to mint cookies & upsert user
-      const res = await axios.post('http://localhost:5000/auth/firebase-login', { idToken }, { withCredentials: true });
+      const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const res = await axios.post(`${baseURL}/auth/firebase-login`, { idToken }, { withCredentials: true });
 
       // optional: fetch profile or rely on server response role
       console.log('Login server response:', res.data);
