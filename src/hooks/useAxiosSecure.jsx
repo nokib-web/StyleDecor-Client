@@ -28,7 +28,7 @@ const useAxiosSecure = () => {
         if ((status === 401 || status === 403) && !originalRequest._retry) {
           originalRequest._retry = true;
           try {
-            await axios.post('http://localhost:5000/auth/refresh-token', {}, { withCredentials: true });
+            await axios.post(`https://style-decor-server-mkbq.onrender.com/auth/refresh-token`, {}, { withCredentials: true });
             return axiosSecure(originalRequest);
           } catch (refreshError) {
             console.error('refresh failed', refreshError);

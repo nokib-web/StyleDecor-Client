@@ -33,7 +33,7 @@ const AuthProvider = ({ children }) => {
         const result = await signInWithEmailAndPassword(auth, email, password);
         const idToken = await result.user.getIdToken();
         // Send to backend to mint cookies
-        await axios.post('http://localhost:5000/auth/firebase-login', { idToken }, { withCredentials: true });
+        await axios.post('https://style-decor-server-mkbq.onrender.com/auth/firebase-login', { idToken }, { withCredentials: true });
         setLoading(false);
         return result;
     };
@@ -43,7 +43,7 @@ const AuthProvider = ({ children }) => {
         setLoading(true);
         const result = await signInWithPopup(auth, googleProvider);
         const idToken = await result.user.getIdToken();
-        await axios.post('http://localhost:5000/auth/firebase-login', { idToken }, { withCredentials: true });
+        await axios.post('https://style-decor-server-mkbq.onrender.com/auth/firebase-login', { idToken }, { withCredentials: true });
         setLoading(false);
         return result;
     };
@@ -57,7 +57,7 @@ const AuthProvider = ({ children }) => {
     // Sign Out User: notify backend to clear refresh token and clear firebase
     const signOutUser = async () => {
         setLoading(true);
-        await axios.post('http://localhost:5000/auth/logout', {}, { withCredentials: true });
+        await axios.post('https://style-decor-server-mkbq.onrender.com/auth/logout', {}, { withCredentials: true });
         await signOut(auth);
         setLoading(false);
     };
