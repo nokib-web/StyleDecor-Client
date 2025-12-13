@@ -1,5 +1,6 @@
 // src/components/SocialLogin.jsx
 import React from 'react';
+import { FcGoogle } from "react-icons/fc";
 import useAuth from '../../../hooks/useAuth';
 import { useLocation, useNavigate } from 'react-router';
 import axios from 'axios';
@@ -29,11 +30,11 @@ const SocialLogin = () => {
   };
 
   return (
-    <div className='text-center mb-4 '>
-      <p className='mb-2'>Or</p>
-      <button onClick={handleGoogleLogin} className="btn px-4 py-2 bg-white text-black border-[#e5e5e5]">
-        {/* SVG and text */}
-        Login with Google
+    <div className='text-center mb-4 px-8'>
+      <div className="divider">OR</div>
+      <button onClick={handleGoogleLogin} className="btn w-full btn-outline flex items-center justify-center gap-2 hover:bg-base-200 hover:text-black">
+        <FcGoogle className='text-xl' />
+        Continue with Google
       </button>
     </div>
   );

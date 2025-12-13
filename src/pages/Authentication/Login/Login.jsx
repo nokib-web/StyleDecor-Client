@@ -11,8 +11,10 @@ const Login = () => {
     const { signInUser, forgotPassword } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
+    const [loginError, setLoginError] = React.useState('');
 
     const handleLogin = data => {
+        setLoginError('');
         console.log('login data', data);
         signInUser(data.email, data.password)
             .then(result => {
@@ -21,7 +23,12 @@ const Login = () => {
                 console.log(user);
             })
             .catch(error => {
-                console.log(error.message);
+                console.error(error);
+                if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
+                    setLoginError('Invalid email or password');
+                } else {
+                    setLoginError(error.message);
+                }
             });
     }
 
@@ -59,6 +66,7 @@ const Login = () => {
 
                     <div><a onClick={handleForgotPassword} className="link link-hover">Forgot password?</a></div>
                     <button className="btn btn-neutral mt-4">Login</button>
+                    {loginError && <p className="text-red-600 text-center mt-2">{loginError}</p>}
                 </fieldset>
                 <p>New to StyleDecor? <Link state={location.state} to="/register" className="link text-blue-800 link-hover">Register here</Link></p>
             </form>

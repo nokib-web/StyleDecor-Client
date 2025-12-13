@@ -16,8 +16,10 @@ const Register = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const axiosSecure = useAxiosSecure()
+    const [registrationError, setRegistrationError] = React.useState('');
 
     const handleRegistration = data => {
+        setRegistrationError('');
 
         // console.log('after register', data.photo[0]);
         const profileImage = data.photo[0];
@@ -75,7 +77,12 @@ const Register = () => {
 
             })
             .catch(error => {
-                console.log(error.message);
+                console.error(error);
+                if (error.code === 'auth/email-already-in-use') {
+                    setRegistrationError('This email is already in use. Please try another one.');
+                } else {
+                    setRegistrationError(error.message);
+                }
             });
     }
 
@@ -116,6 +123,7 @@ const Register = () => {
 
 
                     <button className="btn btn-neutral mt-4">Register</button>
+                    {registrationError && <p className="text-red-600 text-center mt-2">{registrationError}</p>}
                 </fieldset>
                 <p>Already have an account? <Link state={location.state} to="/login" className="link text-blue-800 link-hover">Login here</Link></p>
             </form>
