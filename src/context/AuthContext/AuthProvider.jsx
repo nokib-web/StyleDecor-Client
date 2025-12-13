@@ -13,13 +13,14 @@ import {
     sendEmailVerification
 } from 'firebase/auth';
 import { auth } from './firebase/firebase.config';
-import axios from 'axios';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const axiosPublic = useAxiosPublic();
 
     // Register User (firebase create)
     const registerUser = (email, password) => {
@@ -33,7 +34,7 @@ const AuthProvider = ({ children }) => {
         const result = await signInWithEmailAndPassword(auth, email, password);
         const idToken = await result.user.getIdToken();
         // Send to backend to get accessToken/refreshToken
-        const res = await axios.post('https://style-decor-server-mkbq.onrender.com/auth/firebase-login', { idToken });
+        const res = await axiosPublic.post('/auth/firebase-login', { idToken });
         if (res.data.accessToken) {
             localStorage.setItem('accessToken', res.data.accessToken);
             localStorage.setItem('refreshToken', res.data.refreshToken);
@@ -47,7 +48,7 @@ const AuthProvider = ({ children }) => {
         setLoading(true);
         const result = await signInWithPopup(auth, googleProvider);
         const idToken = await result.user.getIdToken();
-        const res = await axios.post('https://style-decor-server-mkbq.onrender.com/auth/firebase-login', { idToken });
+        const res = await axiosPublic.post('/auth/firebase-login', { idToken });
         if (res.data.accessToken) {
             localStorage.setItem('accessToken', res.data.accessToken);
             localStorage.setItem('refreshToken', res.data.refreshToken);
@@ -66,7 +67,7 @@ const AuthProvider = ({ children }) => {
     const signOutUser = async () => {
         setLoading(true);
         try {
-            await axios.post('https://style-decor-server-mkbq.onrender.com/auth/logout', {});
+            await axiosPublic.post('/auth/logout', {});
         } catch (err) {
             console.error(err);
         }

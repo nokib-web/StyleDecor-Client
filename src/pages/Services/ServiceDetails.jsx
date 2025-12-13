@@ -201,7 +201,7 @@ const ServiceDetails = () => {
                 {/* Left Column: Image & Main Info */}
                 <div className="lg:col-span-2 space-y-8">
                     {/* Hero Image */}
-                    <div className="rounded-2xl overflow-hidden shadow-lg h-[400px]">
+                    <div className="rounded-2xl overflow-hidden shadow-lg h-64 md:h-[400px]">
                         <img
                             src={image}
                             alt={title}
@@ -211,21 +211,21 @@ const ServiceDetails = () => {
 
                     {/* Title & Description */}
                     <div className="bg-base-100 p-6 rounded-xl shadow-sm border border-base-200">
-                        <div className="flex justify-between items-start mb-4">
+                        <div className="flex flex-col md:flex-row justify-between items-start mb-4 gap-4">
                             <div>
                                 <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-3">
                                     {title}
-                                   
+
                                 </h1>
                                 <div className="flex items-center gap-2 mt-2 text-primary uppercase font-semibold text-sm tracking-wide">
                                     <span className="badge badge-outline badge-primary">{category}</span>
                                     {isCustomizable && <span className="badge badge-accent text-white">Customizable</span>}
-                                     <button onClick={handleAddToWishlist} className="btn btn-ghost btn-sm text-red-500 hover:bg-red-50" title="Add to Wishlist">
+                                    <button onClick={handleAddToWishlist} className="btn btn-ghost btn-sm text-red-500 hover:bg-red-50" title="Add to Wishlist">
                                         <FaHeart className="text-2xl" /> <span>Add to Wishlist</span>
                                     </button>
                                 </div>
                                 <div>
-                                        
+
                                 </div>
                             </div>
                             {rating && (
@@ -365,7 +365,7 @@ const ServiceDetails = () => {
                         </button>
                         <h3 className="font-bold text-2xl mb-6 text-gray-800 border-b pb-4">Confirm Booking</h3>
                         <form onSubmit={handleBookingSubmit} className="space-y-4">
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="form-control">
                                     <label className="label">
                                         <span className="label-text font-medium">Service Name</span>
@@ -379,7 +379,7 @@ const ServiceDetails = () => {
                                     <input type="text" value={`$${price}`} disabled className="input input-bordered bg-gray-50 font-bold text-primary" />
                                 </div>
                             </div>
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="form-control">
                                     <label className="label">
                                         <span className="label-text font-medium">User</span>
@@ -394,7 +394,7 @@ const ServiceDetails = () => {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="form-control">
                                     <label className="label">
                                         <span className="label-text font-medium">Service Mode</span>

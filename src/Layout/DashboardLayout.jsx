@@ -49,7 +49,7 @@ const DashboardLayout = () => {
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col bg-canvas">
                 {/* Navbar for mobile */}
-                <div className="w-full navbar bg-surface lg:hidden border-b border-border sticky top-0 z-50">
+                <div className="w-full navbar bg-base-200 lg:hidden border-b border-border sticky top-0 z-50">
                     <div className="flex-none">
                         <label htmlFor="my-drawer-2" className="btn btn-square btn-ghost text-text-primary">
                             <FiMenu className="text-xl" />
@@ -59,7 +59,7 @@ const DashboardLayout = () => {
                 </div>
 
                 {/* Desktop Top Bar */}
-                <div className="hidden lg:flex w-full bg-surface h-16 items-center px-8 shadow-sm border-b border-border gap-4 sticky top-0 z-50">
+                <div className="hidden lg:flex w-full bg-base-200 h-16 items-center px-8 shadow-sm  border-border gap-4 sticky top-0 z-40">
                     <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="btn btn-square btn-ghost text-text-primary">
                         <FiMenu className="text-xl" />
                     </button>
@@ -70,7 +70,7 @@ const DashboardLayout = () => {
                     <Outlet></Outlet>
                 </div>
             </div>
-            <div className="drawer-side">
+            <div className="drawer-side z-50">
                 <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
                 <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
                     {/* Sidebar content here */}

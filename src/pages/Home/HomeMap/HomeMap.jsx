@@ -23,7 +23,7 @@ const HomeMap = () => {
                     <p className="text-gray-600 max-w-2xl mx-auto">We are proudly serving customers across the country.</p>
                 </div>
 
-                <div className="border w-full h-[500px] rounded-xl overflow-hidden shadow-lg">
+                <div className="border w-full h-[300px] rounded-xl overflow-hidden shadow-lg relative z-0">
                     <MapContainer
                         center={position}
                         zoom={7}

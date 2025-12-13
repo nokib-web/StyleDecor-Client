@@ -332,7 +332,7 @@ const MyBookings = () => {
 
             {/* Chat Modal */}
             <dialog id="chat_modal" className="modal">
-                <div className="modal-box w-11/12 max-w-2xl h-[600px] flex flex-col">
+                <div className="modal-box w-11/12 max-w-2xl h-[80vh] flex flex-col">
                     <h3 className="font-bold text-lg border-b pb-2">Chat with Decorator (Project: {selectedChatBooking?.serviceName})</h3>
 
                     <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-base-200 rounded-lg my-4">

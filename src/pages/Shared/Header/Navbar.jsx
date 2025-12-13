@@ -59,7 +59,7 @@ const Navbar = () => {
 
     return (
         <>
-            <div className="sticky top-0 z-50 bg-base-100/95 backdrop-blur-md shadow-sm border-b border-base-200">
+            <div className="sticky top-0 z-[1000] bg-base-100/95 backdrop-blur-md shadow-sm border-b border-base-200">
                 <div className="navbar max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                     <div className="navbar-start">
                         {/* Mobile Menu Toggle */}
@@ -132,7 +132,7 @@ const Navbar = () => {
                             </div>
                         ) : (
                             <div className="">
-                        
+
                                 <Link to="/register" className="btn btn-primary text-white px-6 rounded-full shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all transform hover:-translate-y-0.5">
                                     Join Now
                                 </Link>
@@ -202,7 +202,7 @@ const Navbar = () => {
 
                             {user ? (
                                 <>
-                                    <div className="divider px-6 my-2">Account</div>
+                                    <div className="divider z-60 px-6 my-2">Account</div>
                                     <NavLink
                                         to="/dashboard"
                                         className={sidebarLinkClass}

@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 
 const Hero = () => {
     return (
-        <div className="hero min-h-[50vh]  relative overflow-hidden" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1620626013444-4860ced065ee?q=80&w=2600&auto=format&fit=crop)' }}>
+        <div className="hero h-[30vh] md:h-[80vh] relative overflow-hidden" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80)' }}>
             {/* Gradient Overlay: Primary Gold / Charcoal Mix */}
             <div className="hero-overlay bg-gradient-to-r from-primary/70 via-primary-dark/80 to-primary-dark/95"></div>
             <div className="hero-content text-center text-neutral-content z-10">
