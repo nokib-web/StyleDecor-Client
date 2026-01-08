@@ -134,8 +134,8 @@ const ManageServices = () => {
             </div>
 
             {/* Pagination Controls */}
-            <div className="flex justify-between items-center mt-4 p-4 bg-gray-50 rounded-lg">
-                <div className="text-sm text-gray-500">
+            <div className="flex justify-between items-center mt-4 p-4 bg-base-200 rounded-lg">
+                <div className="text-sm text-base-content/50">
                     Showing {services.length} of {total} services (Page {page + 1} of {Math.max(1, totalPages)})
                 </div>
                 <div className="join">
@@ -146,7 +146,7 @@ const ManageServices = () => {
                     >
                         « Prev
                     </button>
-                    <button className="join-item btn btn-sm bg-white cursor-default">Page {page + 1}</button>
+                    <button className="join-item btn btn-sm bg-base-100 border-base-300 cursor-default">Page {page + 1}</button>
                     <button
                         className="join-item btn btn-sm"
                         disabled={page + 1 >= totalPages}
@@ -159,9 +159,9 @@ const ManageServices = () => {
 
             {/* Update Service Modal */}
             {selectedService && (
-                <div className="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white p-8 rounded-lg w-full max-w-lg max-h-[90vh] overflow-y-auto">
-                        <h3 className="text-2xl font-bold mb-4">Update Service</h3>
+                <div className="fixed inset-0 z-10 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+                    <div className="bg-base-100 p-8 rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl border border-base-200">
+                        <h3 className="text-2xl font-bold mb-4 text-base-content">Update Service</h3>
                         <form onSubmit={handleUpdateService}>
                             <div className="form-control w-full mb-4">
                                 <label className="label"><span className="label-text">Service Name</span></label>

@@ -6,7 +6,7 @@ const ServiceCard = ({ service, onToggleCompare, isSelected }) => {
     const { _id, title, image, description, price, rating, serviceProvider, deliveryTime, isFeatured } = service;
 
     return (
-        <div className={`card bg-base-100 shadow-md hover:shadow-xl transition-all duration-300 border ${isSelected ? 'border-primary ring-2 ring-primary ring-offset-2' : 'border-gray-100'} group relative`}>
+        <div className={`card bg-base-100 shadow-md hover:shadow-xl transition-all duration-300 border ${isSelected ? 'border-primary ring-2 ring-primary ring-offset-2' : 'border-base-200'} group relative`}>
             <figure className="relative h-48 overflow-hidden">
                 <img
                     src={image}
@@ -27,8 +27,8 @@ const ServiceCard = ({ service, onToggleCompare, isSelected }) => {
                 {/* Compare Checkbox */}
                 {onToggleCompare && (
                     <div className="absolute bottom-2 right-2">
-                        <label className="label cursor-pointer bg-white/90 backdrop-blur-sm px-2 py-1 rounded-lg shadow-sm hover:bg-white transition-colors">
-                            <span className="label-text text-xs font-bold mr-2 text-gray-700">Compare</span>
+                        <label className="label cursor-pointer bg-base-100/90 backdrop-blur-sm px-2 py-1 rounded-lg shadow-sm hover:bg-base-100 transition-colors">
+                            <span className="label-text text-xs font-bold mr-2 text-base-content/80">Compare</span>
                             <input
                                 type="checkbox"
                                 className="checkbox checkbox-xs checkbox-primary"
@@ -41,16 +41,16 @@ const ServiceCard = ({ service, onToggleCompare, isSelected }) => {
             </figure>
 
             <div className="card-body p-5">
-                <h2 className="card-title text-lg">{title}</h2>
-                <p className="text-gray-500 text-sm line-clamp-2 h-10">
+                <h2 className="card-title text-lg text-base-content">{title}</h2>
+                <p className="text-base-content/60 text-sm line-clamp-2 h-10">
                     {description}
                 </p>
 
                 <div className="mt-4 space-y-2">
-                    <div className="flex justify-between items-center text-sm text-gray-600">
+                    <div className="flex justify-between items-center text-sm text-base-content/70">
                         <div className="flex items-center gap-1">
                             <FaUserTie className="text-primary" />
-                            <span className="truncate max-w-[100px]">{serviceProvider}</span>
+                            <span className="truncate max-w-[100px] text-base-content/80">{serviceProvider}</span>
                         </div>
                         <div className="flex items-center gap-1">
                             <FaClock className="text-primary" />
@@ -58,7 +58,7 @@ const ServiceCard = ({ service, onToggleCompare, isSelected }) => {
                         </div>
                     </div>
 
-                    <div className="flex justify-between items-center mt-3 pt-3 border-t border-gray-100">
+                    <div className="flex justify-between items-center mt-3 pt-3 border-t border-base-200">
                         <span className="text-xl font-bold text-primary">${price}</span>
                         <Link
                             to={`/services/${_id}`}

@@ -94,16 +94,16 @@ const Services = () => {
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-24">
+    <div className="min-h-screen bg-base-200 pb-24">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
 
         {/* Header */}
         <div className="mb-8 sm:mb-12">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">
+          <h1 className="text-3xl sm:text-4xl font-bold text-base-content">
             Find Your Service
           </h1>
-          <p className="text-gray-600 mt-2">
+          <p className="text-base-content/70 mt-2">
             Browse from {isLoading ? "..." : totalItems} available services
           </p>
         </div>
@@ -133,7 +133,7 @@ const Services = () => {
                 <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
                   type="text"
-                  className="input input-bordered w-full pl-12 pr-4 py-3"
+                  className="input input-bordered w-full pl-12 pr-4 py-3 bg-base-100"
                   placeholder="Search services..."
                   value={searchText}
                   onChange={(e) => setSearchText(e.target.value)}
@@ -154,7 +154,7 @@ const Services = () => {
 
             {/* Results Count */}
             <div className="flex justify-between items-center">
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-base-content/70">
                 {isLoading ? "Loading..." : `${totalItems} services found`}
               </p>
             </div>
@@ -179,10 +179,10 @@ const Services = () => {
             {/* Empty */}
             {!isLoading && services.length === 0 && (
               <div className="text-center py-20">
-                <h3 className="text-2xl font-bold text-gray-800 mb-3">
+                <h3 className="text-2xl font-bold text-base-content mb-3">
                   No services found
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-base-content/70">
                   Adjust your search or filters.
                 </p>
               </div>
@@ -285,14 +285,14 @@ const Services = () => {
       {/* =============== COMPARISON FLOATING BAR =============== */}
       {
         selectedForComparison.length > 0 && (
-          <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] z-40 animate-slide-up transition-transform duration-300">
+          <div className="fixed bottom-0 left-0 right-0 bg-base-100 border-t border-base-300 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] z-40 animate-slide-up transition-transform duration-300">
             <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
 
               <div className="flex items-center gap-4 overflow-x-auto pb-2 sm:pb-0 w-full sm:w-auto scrollbar-hide">
-                <span className="font-bold text-gray-700 whitespace-nowrap hidden sm:block">Compare ({selectedForComparison.length}/3):</span>
+                <span className="font-bold text-base-content whitespace-nowrap hidden sm:block">Compare ({selectedForComparison.length}/3):</span>
                 {selectedForComparison.map(service => (
                   <div key={service._id} className="relative group shrink-0">
-                    <img src={service.image} alt={service.title} className="w-12 h-12 rounded-lg object-cover border border-gray-200" />
+                    <img src={service.image} alt={service.title} className="w-12 h-12 rounded-lg object-cover border border-base-300" />
                     <button
                       onClick={() => toggleCompare(service)}
                       className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity"
@@ -306,7 +306,7 @@ const Services = () => {
               <div className="flex gap-3 w-full sm:w-auto">
                 <button
                   onClick={() => setSelectedForComparison([])}
-                  className="btn btn-ghost btn-sm text-gray-500"
+                  className="btn btn-ghost btn-sm text-base-content/60"
                 >
                   Clear All
                 </button>
@@ -356,7 +356,7 @@ const Services = () => {
                 <tr>
                   <td className="font-bold text-left">Price</td>
                   {selectedForComparison.map(service => (
-                    <td key={service._id} className="font-semibold text-gray-700">${service.price}</td>
+                    <td key={service._id} className="font-semibold text-base-content/80">${service.price}</td>
                   ))}
                 </tr>
 

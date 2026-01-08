@@ -27,7 +27,7 @@ const features = [
 
 const WhyChooseUs = () => {
     return (
-        <div className="py-20 bg-gray-50">
+        <div className="py-20 bg-base-200">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
                     <motion.h2
@@ -42,7 +42,7 @@ const WhyChooseUs = () => {
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
-                        className="text-gray-600 max-w-2xl mx-auto text-lg"
+                        className="text-base-content/70 max-w-2xl mx-auto text-lg"
                     >
                         We create unforgettable experiences with a touch of elegance and sustainability. Here's what sets us apart.
                     </motion.p>
@@ -56,15 +56,15 @@ const WhyChooseUs = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
                             whileHover={{ y: -10 }}
-                            className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 flex flex-col items-center text-center group"
+                            className="bg-base-100 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-base-200 flex flex-col items-center text-center group"
                         >
-                            <div className="mb-6 p-4 bg-gray-50 rounded-full group-hover:bg-blue-50 transition-colors duration-300">
+                            <div className="mb-6 p-4 bg-base-200 rounded-full group-hover:bg-primary/10 transition-colors duration-300">
                                 {feature.icon}
                             </div>
-                            <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-primary transition-colors">
+                            <h3 className="text-xl font-bold text-base-content mb-3 group-hover:text-primary transition-colors">
                                 {feature.title}
                             </h3>
-                            <p className="text-gray-600 leading-relaxed">
+                            <p className="text-base-content/70 leading-relaxed">
                                 {feature.description}
                             </p>
                         </motion.div>

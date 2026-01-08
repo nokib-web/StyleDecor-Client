@@ -25,42 +25,42 @@ const DecoratorEarnings = () => {
 
     return (
         <div className="p-6">
-            <h2 className="text-3xl font-bold text-gray-800 mb-8">My Earnings & Stats</h2>
+            <h2 className="text-3xl font-bold text-base-content mb-8">My Earnings & Stats</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
                 {/* Total Earnings */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center gap-4 transition-transform hover:scale-[1.02]">
-                    <div className="p-4 bg-green-100 text-green-600 rounded-full">
+                <div className="bg-base-100 rounded-xl shadow-sm border border-base-200 p-6 flex items-center gap-4 transition-transform hover:scale-[1.02]">
+                    <div className="p-4 bg-success/10 text-success rounded-full">
                         <FiDollarSign className="w-8 h-8" />
                     </div>
                     <div>
-                        <p className="text-sm font-medium text-gray-500">Total Earnings</p>
-                        <h3 className="text-3xl font-bold text-gray-900">
+                        <p className="text-sm font-medium text-base-content/50">Total Earnings</p>
+                        <h3 className="text-3xl font-bold text-base-content">
                             ${totalEarnings.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </h3>
                     </div>
                 </div>
 
                 {/* Total Bookings */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center gap-4 transition-transform hover:scale-[1.02]">
-                    <div className="p-4 bg-blue-100 text-blue-600 rounded-full">
+                <div className="bg-base-100 rounded-xl shadow-sm border border-base-200 p-6 flex items-center gap-4 transition-transform hover:scale-[1.02]">
+                    <div className="p-4 bg-primary/10 text-primary rounded-full">
                         <FiBriefcase className="w-8 h-8" />
                     </div>
                     <div>
-                        <p className="text-sm font-medium text-gray-500">Total Assigned Projects</p>
-                        <h3 className="text-3xl font-bold text-gray-900">{totalBookings}</h3>
+                        <p className="text-sm font-medium text-base-content/50">Total Assigned Projects</p>
+                        <h3 className="text-3xl font-bold text-base-content">{totalBookings}</h3>
                     </div>
                 </div>
 
                 {/* Completed Projects */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center gap-4 transition-transform hover:scale-[1.02]">
-                    <div className="p-4 bg-purple-100 text-purple-600 rounded-full">
+                <div className="bg-base-100 rounded-xl shadow-sm border border-base-200 p-6 flex items-center gap-4 transition-transform hover:scale-[1.02]">
+                    <div className="p-4 bg-secondary/10 text-secondary rounded-full">
                         <FiCheckCircle className="w-8 h-8" />
                     </div>
                     <div>
-                        <p className="text-sm font-medium text-gray-500">Completed Projects</p>
-                        <h3 className="text-3xl font-bold text-gray-900">{completedBookings}</h3>
+                        <p className="text-sm font-medium text-base-content/50">Completed Projects</p>
+                        <h3 className="text-3xl font-bold text-base-content">{completedBookings}</h3>
                     </div>
                 </div>
 
@@ -68,11 +68,11 @@ const DecoratorEarnings = () => {
 
             {/* Earnings History Table */}
             <div className="mt-12">
-                <h3 className="text-2xl font-bold text-gray-800 mb-6">Payment History</h3>
-                <div className="overflow-x-auto bg-white rounded-xl shadow-sm border border-gray-100">
+                <h3 className="text-2xl font-bold text-base-content mb-6">Payment History</h3>
+                <div className="overflow-x-auto bg-base-100 rounded-xl shadow-sm border border-base-200">
                     <table className="table w-full">
-                        <thead className="bg-gray-50">
-                            <tr>
+                        <thead className="bg-base-200">
+                            <tr className="text-base-content/70">
                                 <th>Date</th>
                                 <th>Service</th>
                                 <th>Customer</th>
@@ -108,25 +108,25 @@ const HistoryRows = ({ userEmail, axiosSecure }) => {
     const history = bookings.filter(b => b.status === 'completed' || b.status === 'paid');
 
     if (history.length === 0) {
-        return <tr><td colSpan="5" className="text-center py-4">No payment history available.</td></tr>;
+        return <tr><td colSpan="5" className="text-center py-4 text-base-content/40">No payment history available.</td></tr>;
     }
 
     return (
         <>
             {history.map(booking => (
-                <tr key={booking._id} className="hover:bg-gray-50">
-                    <td>{new Date(booking.date).toLocaleDateString()}</td>
+                <tr key={booking._id} className="hover:bg-base-200 transition-colors">
+                    <td className="text-base-content/80">{new Date(booking.date).toLocaleDateString()}</td>
                     <td>
-                        <div className="font-bold">{booking.serviceName}</div>
-                        <div className="text-xs opacity-50 capitalize">{booking.serviceType}</div>
+                        <div className="font-bold text-base-content">{booking.serviceName}</div>
+                        <div className="text-xs opacity-50 capitalize text-base-content/60">{booking.serviceType}</div>
                     </td>
-                    <td>{booking.userName}</td>
+                    <td className="text-base-content/80">{booking.userName}</td>
                     <td>
                         <span className={`badge ${booking.status === 'paid' ? 'badge-success text-white' : 'badge-ghost'}`}>
                             {booking.status}
                         </span>
                     </td>
-                    <td className="text-right font-mono font-bold">
+                    <td className="text-right font-mono font-bold text-base-content">
                         ${booking.price}
                     </td>
                 </tr>

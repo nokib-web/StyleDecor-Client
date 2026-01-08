@@ -24,10 +24,10 @@ const Brand = () => {
     ];
 
     return (
-        <div className='max-w-7xl mx-auto px-6 py-20 bg-canvas'>
+        <div className='max-w-7xl mx-auto px-6 py-20 bg-base-100'>
             <div className='text-center mb-12'>
-                <h2 className='text-3xl md:text-4xl font-bold text-text-primary mb-4'>Trusted By Top Brands</h2>
-                <p className='text-text-secondary text-lg'>Collaborating with industry leaders to create stunning environments.</p>
+                <h2 className='text-3xl md:text-4xl font-bold text-base-content mb-4'>Trusted By Top Brands</h2>
+                <p className='text-base-content/60 text-lg'>Collaborating with industry leaders to create stunning environments.</p>
             </div>
 
             <Swiper
@@ -58,10 +58,10 @@ const Brand = () => {
                 {brands.map((brand) => (
                     <SwiperSlide key={brand.id}>
                         <div className="flex flex-col items-center justify-center gap-3 opacity-60 hover:opacity-100 transition-opacity duration-300 group cursor-pointer">
-                            <div className="text-5xl text-text-secondary group-hover:text-primary transition-colors">
+                            <div className="text-5xl text-base-content/60 group-hover:text-primary transition-colors">
                                 {brand.icon}
                             </div>
-                            <span className="text-lg font-medium text-text-secondary group-hover:text-text-primary">{brand.name}</span>
+                            <span className="text-lg font-medium text-base-content/60 group-hover:text-base-content">{brand.name}</span>
                         </div>
                     </SwiperSlide>
                 ))}

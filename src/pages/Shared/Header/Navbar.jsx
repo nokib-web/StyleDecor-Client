@@ -40,12 +40,12 @@ const Navbar = () => {
     const getLinkClass = ({ isActive }) =>
         isActive
             ? "text-primary font-bold border-b-2 border-primary pb-1 transition-all duration-300"
-            : "text-text-secondary hover:text-primary font-medium transition-all duration-300 hover:pb-1";
+            : "text-base-content/70 hover:text-primary font-medium transition-all duration-300 hover:pb-1";
 
     const sidebarLinkClass = ({ isActive }) =>
         isActive
-            ? "block px-6 py-4 text-xl font-bold text-primary bg-primary-light/20 border-l-4 border-primary"
-            : "block px-6 py-4 text-xl font-medium text-text-secondary hover:text-primary hover:bg-surface-2 transition-all";
+            ? "block px-6 py-4 text-xl font-bold text-primary bg-primary/10 border-l-4 border-primary"
+            : "block px-6 py-4 text-xl font-medium text-base-content/70 hover:text-primary hover:bg-base-200 transition-all";
 
     // --- NAV LINKS ---
     const navItems = [
@@ -152,20 +152,20 @@ const Navbar = () => {
             >
                 {/* Sidebar Content */}
                 < div
-                    className={`fixed top-0 left-0 w-[85%] max-w-sm h-full bg-white shadow-2xl transition-transform duration-300 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+                    className={`fixed top-0 left-0 w-[85%] max-w-sm h-full bg-base-100 shadow-2xl transition-transform duration-300 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
                         }`}
                     onClick={(e) => e.stopPropagation()}
                 >
-                    <div className="flex justify-between items-center p-6 border-b border-gray-100">
+                    <div className="flex justify-between items-center p-6 border-b border-base-200">
                         <Logo />
-                        <button onClick={() => setIsSidebarOpen(false)} className="btn btn-ghost btn-circle text-gray-500">
+                        <button onClick={() => setIsSidebarOpen(false)} className="btn btn-ghost btn-circle text-base-content/50">
                             <FiX className="h-6 w-6" />
                         </button>
                     </div>
 
                     <div className="py-4 overflow-y-auto h-[calc(100%-80px)]">
                         {user && (
-                            <div className="px-6 pb-6 mb-4 border-b border-gray-100">
+                            <div className="px-6 pb-6 mb-4 border-b border-base-200">
                                 <div className="flex items-center gap-4">
                                     <div className="avatar online">
                                         <div className="w-12 h-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
@@ -173,8 +173,8 @@ const Navbar = () => {
                                         </div>
                                     </div>
                                     <div>
-                                        <p className="font-bold text-gray-800 text-lg">{user.displayName}</p>
-                                        <p className="text-sm text-gray-500 truncate w-40">{user.email}</p>
+                                        <p className="font-bold text-base-content text-lg">{user.displayName}</p>
+                                        <p className="text-sm text-base-content/60 truncate w-40">{user.email}</p>
                                     </div>
                                 </div>
                             </div>

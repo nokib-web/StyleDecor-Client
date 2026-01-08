@@ -57,10 +57,10 @@ const FiltersSidebar = ({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 h-fit sticky top-24">
+    <div className="bg-base-100 rounded-xl shadow-sm border border-base-200 p-6 h-fit sticky top-24">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold text-gray-900">Filters</h2>
+        <h2 className="text-xl font-bold text-base-content">Filters</h2>
         {onClose && (
           <button
             onClick={onClose}
@@ -74,7 +74,7 @@ const FiltersSidebar = ({
 
       {/* Active Filters Header */}
       {hasActiveFilters && (
-        <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
+        <div className="flex justify-between items-center mb-6 pb-4 border-b border-base-200">
           <span className="text-sm font-semibold text-primary">Active filters</span>
           <button onClick={clearAllFilters} className="text-xs text-red-500 hover:text-red-700 font-medium transition-colors">
             Clear all
@@ -84,7 +84,7 @@ const FiltersSidebar = ({
 
       {/* Category Filter */}
       <div className="mb-8">
-        <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">Category</h3>
+        <h3 className="text-sm font-bold text-base-content uppercase tracking-wider mb-4">Category</h3>
         <div className="space-y-1">
           {categories.map((cat) => (
             <label
@@ -92,7 +92,7 @@ const FiltersSidebar = ({
               className={`group flex items-center justify-between p-2.5 rounded-lg cursor-pointer transition-all duration-200
                 ${category === cat.value
                   ? "bg-primary text-white shadow-md transform scale-[1.02]"
-                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                  : "text-base-content/70 hover:bg-base-200 hover:text-base-content"
                 }`}
             >
               <div className="flex items-center gap-3 w-full">
@@ -111,7 +111,7 @@ const FiltersSidebar = ({
 
               {/* Count Badge */}
               {cat.count !== null && (
-                <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${category === cat.value ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500 group-hover:bg-gray-200'
+                <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${category === cat.value ? 'bg-white/20 text-white' : 'bg-base-200 text-base-content/60 group-hover:bg-base-300'
                   }`}>
                   {cat.count}
                 </span>
@@ -128,7 +128,7 @@ const FiltersSidebar = ({
 
       {/* Sort Options */}
       <div className="mb-8">
-        <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">Sort By</h3>
+        <h3 className="text-sm font-bold text-base-content uppercase tracking-wider mb-4">Sort By</h3>
         <div className="space-y-2">
           {sortOptions.map((option) => (
             <label
@@ -136,7 +136,7 @@ const FiltersSidebar = ({
               className={`flex items-center justify-between p-3 rounded-lg cursor-pointer border transition-all duration-200
                 ${sort === option.value
                   ? "border-primary bg-primary/5 shadow-sm"
-                  : "border-transparent hover:bg-gray-50 hover:border-gray-200"
+                  : "border-transparent hover:bg-base-200 hover:border-base-300"
                 }`}
             >
               <div className="flex items-center gap-3">
@@ -148,10 +148,10 @@ const FiltersSidebar = ({
                   onChange={(e) => setSort(e.target.value)}
                   className="hidden"
                 />
-                <div className={`p-1.5 rounded-md ${sort === option.value ? 'bg-primary text-white' : 'bg-gray-100 text-gray-500'}`}>
+                <div className={`p-1.5 rounded-md ${sort === option.value ? 'bg-primary text-white' : 'bg-base-200 text-base-content/60'}`}>
                   {option.icon}
                 </div>
-                <span className={`text-sm font-medium ${sort === option.value ? 'text-gray-900' : 'text-gray-600'}`}>
+                <span className={`text-sm font-medium ${sort === option.value ? 'text-base-content' : 'text-base-content/70'}`}>
                   {option.label}
                 </span>
               </div>
@@ -169,7 +169,7 @@ const FiltersSidebar = ({
       {/* Price Range */}
       <div>
         <div className="flex items-center gap-2 mb-4">
-          <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider">Price Range</h3>
+          <h3 className="text-sm font-bold text-base-content uppercase tracking-wider">Price Range</h3>
         </div>
 
         <div className="flex items-center gap-2 mb-4">
@@ -197,8 +197,8 @@ const FiltersSidebar = ({
         </div>
 
         {(priceRange.min || priceRange.max) && (
-          <div className="flex justify-between items-center bg-gray-50 p-2 rounded-lg border border-gray-100">
-            <span className="text-xs font-medium text-gray-600">
+          <div className="flex justify-between items-center bg-base-200 p-2 rounded-lg border border-base-300">
+            <span className="text-xs font-medium text-base-content/70">
               Selected: <span className="text-primary font-bold">${priceRange.min || 0} – ${priceRange.max || "Any"}</span>
             </span>
             <button

@@ -98,8 +98,8 @@ const StyleQuiz = () => {
 
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
-            <div className=" w-full bg-white rounded-3xl shadow-2xl overflow-hidden min-h-[500px] flex flex-col">
+        <div className="min-h-screen bg-base-200 flex flex-col items-center justify-center p-4">
+            <div className=" w-full bg-base-100 rounded-3xl shadow-2xl overflow-hidden min-h-[500px] flex flex-col">
 
                 {/* Header */}
                 <div className="bg-primary p-8 text-white text-center">
@@ -110,15 +110,15 @@ const StyleQuiz = () => {
                 <div className="p-8 flex-grow flex flex-col justify-center">
                     {!showResult ? (
                         <div className="animate-fade-in-up">
-                            <h2 className="text-2xl font-semibold text-gray-800 mb-8 text-center">{questions[currentQuestion].question}</h2>
+                            <h2 className="text-2xl font-semibold text-base-content mb-8 text-center">{questions[currentQuestion].question}</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {questions[currentQuestion].options.map((option, index) => (
                                     <button
                                         key={index}
                                         onClick={() => handleAnswer(option.style)}
-                                        className="btn btn-outline btn-lg h-auto py-4 text-left justify-start hover:bg-primary hover:text-white transition-all border-gray-200"
+                                        className="btn btn-outline btn-lg h-auto py-4 text-left justify-start hover:bg-primary hover:text-white transition-all border-base-200 bg-base-100 text-base-content"
                                     >
-                                        <span className="mr-3 bg-gray-100 text-gray-800 w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold group-hover:bg-white">
+                                        <span className="mr-3 bg-base-200 text-base-content/80 w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold group-hover:bg-white transition-colors">
                                             {String.fromCharCode(65 + index)}
                                         </span>
                                         {option.text}
@@ -129,9 +129,8 @@ const StyleQuiz = () => {
                     ) : (
                         <div className="text-center animate-fade-in">
                             <h2 className="text-4xl font-bold text-primary mb-2">You are {resultStyle}!</h2>
-                            <p className="text-gray-600 mb-8">Your style reflects a love for {resultStyle.toLowerCase()} elements. succinct, elegant, and perfectly you.</p>
-
-                            <h3 className="text-xl font-bold text-gray-800 mb-6 border-b pb-2 inline-block">Recommended for You</h3>
+                            <p className="text-base-content/70 mb-8">Your style reflects a love for {resultStyle.toLowerCase()} elements. succinct, elegant, and perfectly you.</p>
+                            <h3 className="text-xl font-bold text-base-content mb-6 border-b border-base-200 pb-2 inline-block">Recommended for You</h3>
 
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 text-left">
                                 {displayServices.map(service => (
@@ -153,7 +152,7 @@ const StyleQuiz = () => {
 
                 {/* Progress Bar */}
                 {!showResult && (
-                    <div className="bg-gray-100 h-2 w-full">
+                    <div className="bg-base-200 h-2 w-full">
                         <div
                             className="bg-accent h-full transition-all duration-300"
                             style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}

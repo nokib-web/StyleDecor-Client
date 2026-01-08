@@ -13,7 +13,7 @@ const Coverage = () => {
     const handleSearch = e => {
         e.preventDefault();
         const location = e.target.location.value;
-       
+
         const district = serviceCenters.find(c => c.district.toLowerCase().includes(location.toLowerCase()));
 
         if (district) {
@@ -26,7 +26,7 @@ const Coverage = () => {
 
     return (
         <div className='my-10'>
-            <h2 className="text-3xl text-secondary text-center my-10 font-bold">We are available in 64 districts</h2>
+            <h2 className="text-3xl text-primary text-center my-10 font-bold">We are available in 64 districts</h2>
             <div className='text-center my-10'>
                 {/* search  */}
                 <form onSubmit={handleSearch}>

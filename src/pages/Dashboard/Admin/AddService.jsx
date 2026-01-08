@@ -36,15 +36,15 @@ const AddService = () => {
     };
 
     return (
-        <div className="w-full p-8 bg-white rounded-xl shadow-lg">
-            <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">Add New Decoration Service</h2>
+        <div className="w-full p-8 bg-base-100 rounded-xl shadow-lg border border-base-200">
+            <h2 className="text-3xl font-bold mb-8 text-center text-base-content">Add New Decoration Service</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
 
                 {/* Service Name & Cost */}
                 <div className="flex gap-6">
                     <div className="form-control w-full">
                         <label className="label">
-                            <span className="label-text font-medium text-gray-700">Service Name*</span>
+                            <span className="label-text font-medium text-base-content/70">Service Name*</span>
                         </label>
                         <input
                             type="text"
@@ -57,7 +57,7 @@ const AddService = () => {
 
                     <div className="form-control w-full">
                         <label className="label">
-                            <span className="label-text font-medium text-gray-700">Cost (BDT)*</span>
+                            <span className="label-text font-medium text-base-content/70">Cost (BDT)*</span>
                         </label>
                         <input
                             type="number"
@@ -73,7 +73,7 @@ const AddService = () => {
                 <div className="flex gap-6">
                     <div className="form-control w-full">
                         <label className="label">
-                            <span className="label-text font-medium text-gray-700">Unit*</span>
+                            <span className="label-text font-medium text-base-content/70">Unit*</span>
                         </label>
                         <input
                             type="text"
@@ -86,7 +86,7 @@ const AddService = () => {
 
                     <div className="form-control w-full">
                         <label className="label">
-                            <span className="label-text font-medium text-gray-700">Category*</span>
+                            <span className="label-text font-medium text-base-content/70">Category*</span>
                         </label>
                         <select
                             defaultValue="default"
@@ -108,7 +108,7 @@ const AddService = () => {
                 {/* Image URL */}
                 <div className="form-control w-full">
                     <label className="label">
-                        <span className="label-text font-medium text-gray-700">Service Image URL*</span>
+                        <span className="label-text font-medium text-base-content/70">Service Image URL*</span>
                     </label>
                     <input
                         type="text"
@@ -122,7 +122,7 @@ const AddService = () => {
                 {/* Description */}
                 <div className="form-control">
                     <label className="label">
-                        <span className="label-text font-medium text-gray-700">Description*</span>
+                        <span className="label-text font-medium text-base-content/70">Description*</span>
                     </label>
                     <textarea
                         {...register("description", { required: true })}
@@ -135,13 +135,13 @@ const AddService = () => {
                 {/* Created By (Read-only) */}
                 <div className="form-control w-full">
                     <label className="label">
-                        <span className="label-text font-medium text-gray-700">Created By</span>
+                        <span className="label-text font-medium text-base-content/70">Created By</span>
                     </label>
                     <input
                         type="text"
                         value={user?.email || ''}
                         readOnly
-                        className="input input-bordered w-full bg-gray-100 text-gray-500 cursor-not-allowed"
+                        className="input input-bordered w-full bg-base-200 text-base-content/50 cursor-not-allowed border-base-300"
                     />
                 </div>
 

@@ -66,44 +66,44 @@ const BecomeDecorator = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-base-200">
             {/* Hero Section */}
-            <div className="bg-gray-900 text-white py-20 px-6 text-center">
-                <h1 className="text-4xl md:text-5xl font-bold mb-4">Join Our Decorator Team</h1>
-                <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+            <div className="bg-base-300 py-20 px-6 text-center border-b border-base-200">
+                <h1 className="text-4xl md:text-5xl font-bold mb-4 text-base-content">Join Our Decorator Team</h1>
+                <p className="text-base-content/70 text-lg max-w-2xl mx-auto">
                     Showcase your talent, connect with clients, and grow your interior design business with StyleDecor.
                 </p>
             </div>
 
             <div className="max-w-4xl mx-auto px-6 py-12 -mt-10">
-                <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
-                    <h2 className="text-2xl font-bold mb-6 text-gray-800">Apply to become a Decorator</h2>
+                <div className="bg-base-100 rounded-2xl shadow-xl p-8 md:p-12 border border-base-200">
+                    <h2 className="text-2xl font-bold mb-6 text-base-content">Apply to become a Decorator</h2>
 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                         {/* Name & Email (Read only) */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="form-control">
-                                <label className="label font-medium text-gray-600">Name</label> <br />
+                                <label className="label font-medium text-base-content/70">Name</label> <br />
                                 <input
                                     type="text"
                                     value={user?.displayName || ''}
                                     readOnly
-                                    className="input input-bordered bg-gray-100 cursor-not-allowed"
+                                    className="input input-bordered bg-base-200 text-base-content/50 cursor-not-allowed border-base-300"
                                 />
                             </div>
                             <div className="form-control">
-                                <label className="label font-medium text-gray-600">Email</label> <br />
+                                <label className="label font-medium text-base-content/70">Email</label> <br />
                                 <input
                                     type="email"
                                     value={user?.email || ''}
                                     readOnly
-                                    className="input input-bordered bg-gray-100 cursor-not-allowed"
+                                    className="input input-bordered bg-base-200 text-base-content/50 cursor-not-allowed border-base-300"
                                 />
                             </div>
 
                             {/* Portfolio Image Upload */}
                             <div className="form-control">
-                                <label className="label font-medium text-gray-600">Best Work Sample (Image)</label> <br />
+                                <label className="label font-medium text-base-content/70">Best Work Sample (Image)</label> <br />
                                 <input
                                     type="file"
                                     {...register("portfolio", { required: "Portfolio image is required" })}
@@ -117,7 +117,7 @@ const BecomeDecorator = () => {
 
                         {/* Experience */}
                         <div className="form-control">
-                            <label className="label font-medium text-gray-600">Years of Experience</label> <br />
+                            <label className="label font-medium text-base-content/70">Years of Experience</label> <br />
                             <input
                                 type="number"
                                 placeholder="e.g. 5"
@@ -129,7 +129,7 @@ const BecomeDecorator = () => {
 
                         {/* Specialty */}
                         <div className="form-control">
-                            <label className="label font-medium text-gray-600">Specialty (e.g., Modern, Rustic, Commercial)</label> <br />
+                            <label className="label font-medium text-base-content/70">Specialty (e.g., Modern, Rustic, Commercial)</label> <br />
                             <input
                                 type="text"
                                 placeholder="What is your main style?"
@@ -142,7 +142,7 @@ const BecomeDecorator = () => {
 
                         {/* About */}
                         <div className="form-control">
-                            <label className="label font-medium text-gray-600">Why should we hire you?</label> <br />
+                            <label className="label font-medium text-base-content/70">Why should we hire you?</label> <br />
                             <textarea
                                 className="textarea textarea-bordered h-32"
                                 placeholder="Tell us about your passion and expertise..."
@@ -166,28 +166,28 @@ const BecomeDecorator = () => {
 
             {/* Benefits Section */}
             <div className="max-w-6xl mx-auto px-6 py-16">
-                <h2 className="text-3xl font-bold text-center mb-12">Why Join StyleDecor?</h2>
+                <h2 className="text-3xl font-bold text-center mb-12 text-base-content">Why Join StyleDecor?</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div className="text-center p-6 bg-white rounded-xl shadow-sm border border-gray-100">
+                    <div className="text-center p-6 bg-base-100 rounded-xl shadow-sm border border-base-200">
                         <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 text-primary">
                             <FiCheckCircle className="w-8 h-8" />
                         </div>
-                        <h3 className="text-xl font-bold mb-2">High Quality Leads</h3>
-                        <p className="text-gray-500">Get matched with clients actively looking for your specific design style.</p>
+                        <h3 className="text-xl font-bold mb-2 text-base-content">High Quality Leads</h3>
+                        <p className="text-base-content/60">Get matched with clients actively looking for your specific design style.</p>
                     </div>
-                    <div className="text-center p-6 bg-white rounded-xl shadow-sm border border-gray-100">
+                    <div className="text-center p-6 bg-base-100 rounded-xl shadow-sm border border-base-200">
                         <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 text-primary">
                             <FiBriefcase className="w-8 h-8" /> {/* Reusing icon, need import if different */}
                         </div>
-                        <h3 className="text-xl font-bold mb-2">Manage Projects</h3>
-                        <p className="text-gray-500">Use our dashboard to track bookings, payments, and client communications.</p>
+                        <h3 className="text-xl font-bold mb-2 text-base-content">Manage Projects</h3>
+                        <p className="text-base-content/60">Use our dashboard to track bookings, payments, and client communications.</p>
                     </div>
-                    <div className="text-center p-6 bg-white rounded-xl shadow-sm border border-gray-100">
+                    <div className="text-center p-6 bg-base-100 rounded-xl shadow-sm border border-base-200">
                         <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 text-primary">
                             <FiDollarSign className="w-8 h-8" />
                         </div>
-                        <h3 className="text-xl font-bold mb-2">Secure Payments</h3>
-                        <p className="text-gray-500">Guaranteed payments for your completed work, processed securely.</p>
+                        <h3 className="text-xl font-bold mb-2 text-base-content">Secure Payments</h3>
+                        <p className="text-base-content/60">Guaranteed payments for your completed work, processed securely.</p>
                     </div>
                 </div>
             </div>

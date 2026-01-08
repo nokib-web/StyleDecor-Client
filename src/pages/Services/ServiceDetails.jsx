@@ -213,7 +213,7 @@ const ServiceDetails = () => {
                     <div className="bg-base-100 p-6 rounded-xl shadow-sm border border-base-200">
                         <div className="flex flex-col md:flex-row justify-between items-start mb-4 gap-4">
                             <div>
-                                <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-3">
+                                <h1 className="text-3xl font-bold text-base-content flex items-center gap-3">
                                     {title}
 
                                 </h1>
@@ -229,17 +229,17 @@ const ServiceDetails = () => {
                                 </div>
                             </div>
                             {rating && (
-                                <div className="flex flex-col items-center bg-yellow-50 p-2 rounded-lg border border-yellow-100">
-                                    <div className="flex items-center gap-1 text-yellow-500 font-bold text-xl">
+                                <div className="flex flex-col items-center bg-warning/10 p-2 rounded-lg border border-warning/20">
+                                    <div className="flex items-center gap-1 text-warning font-bold text-xl">
                                         <span>★</span> {rating}
                                     </div>
-                                    <span className="text-xs text-gray-500">Rating</span>
+                                    <span className="text-xs text-base-content/50">Rating</span>
                                 </div>
                             )}
                         </div>
 
 
-                        <p className="text-gray-600 leading-relaxed text-lg mb-6">
+                        <p className="text-base-content/70 leading-relaxed text-lg mb-6">
                             {description}
                         </p>
 
@@ -252,8 +252,8 @@ const ServiceDetails = () => {
                                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                     {features.map((feature, idx) => (
                                         <li key={idx} className="flex items-center gap-3 bg-base-200 p-3 rounded-lg">
-                                            <FaCheckCircle className="text-green-500 shrink-0" />
-                                            <span className="text-gray-700">{feature}</span>
+                                            <FaCheckCircle className="text-success shrink-0" />
+                                            <span className="text-base-content/80">{feature}</span>
                                         </li>
                                     ))}
                                 </ul>
@@ -267,11 +267,11 @@ const ServiceDetails = () => {
                     <div className="bg-base-100 rounded-xl shadow-lg border border-base-200 sticky top-24 p-6">
 
                         {/* Price Section */}
-                        <div className="mb-6 pb-6 border-b border-gray-100">
-                            <span className="text-gray-500 block mb-1">Total Price</span>
+                        <div className="mb-6 pb-6 border-b border-base-200">
+                            <span className="text-base-content/50 block mb-1">Total Price</span>
                             <div className="flex items-baseline gap-1">
                                 <span className="text-4xl font-bold text-primary">${price}</span>
-                                <span className="text-gray-400 font-medium">/ service</span>
+                                <span className="text-base-content/40 font-medium">/ service</span>
                             </div>
                         </div>
 
@@ -279,48 +279,48 @@ const ServiceDetails = () => {
                         <div className="space-y-4 mb-8">
                             {serviceProvider && (
                                 <div className="flex items-center gap-3">
-                                    <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
+                                    <div className="p-2 bg-primary/10 text-primary rounded-lg">
                                         <FaUserTie />
                                     </div>
                                     <div>
-                                        <p className="text-xs text-gray-500">Service Provider</p>
-                                        <p className="font-semibold text-gray-700">{serviceProvider}</p>
+                                        <p className="text-xs text-base-content/50">Service Provider</p>
+                                        <p className="font-semibold text-base-content/80">{serviceProvider}</p>
                                     </div>
                                 </div>
                             )}
 
                             {deliveryTime && (
                                 <div className="flex items-center gap-3">
-                                    <div className="p-2 bg-purple-50 text-purple-600 rounded-lg">
+                                    <div className="p-2 bg-secondary/10 text-secondary rounded-lg">
                                         <FaClock />
                                     </div>
                                     <div>
-                                        <p className="text-xs text-gray-500">Estimated Delivery</p>
-                                        <p className="font-semibold text-gray-700">{deliveryTime} Days</p>
+                                        <p className="text-xs text-base-content/50">Estimated Delivery</p>
+                                        <p className="font-semibold text-base-content/80">{deliveryTime} Days</p>
                                     </div>
                                 </div>
                             )}
 
                             {location && (
                                 <div className="flex items-center gap-3">
-                                    <div className="p-2 bg-red-50 text-red-600 rounded-lg">
+                                    <div className="p-2 bg-accent/10 text-accent rounded-lg">
                                         <FaMapMarkerAlt />
                                     </div>
                                     <div>
-                                        <p className="text-xs text-gray-500">Service Area</p>
-                                        <p className="font-semibold text-gray-700">{location}</p>
+                                        <p className="text-xs text-base-content/50">Service Area</p>
+                                        <p className="font-semibold text-base-content/80">{location}</p>
                                     </div>
                                 </div>
                             )}
 
                             {warrantyDays > 0 && (
                                 <div className="flex items-center gap-3">
-                                    <div className="p-2 bg-green-50 text-green-600 rounded-lg">
+                                    <div className="p-2 bg-success/10 text-success rounded-lg">
                                         <FaShieldAlt />
                                     </div>
                                     <div>
-                                        <p className="text-xs text-gray-500">Warranty</p>
-                                        <p className="font-semibold text-gray-700">{warrantyDays} Days Coverage</p>
+                                        <p className="text-xs text-base-content/50">Warranty</p>
+                                        <p className="font-semibold text-base-content/80">{warrantyDays} Days Coverage</p>
                                     </div>
                                 </div>
                             )}
@@ -336,13 +336,13 @@ const ServiceDetails = () => {
 
                         {/* Tags */}
                         {tags.length > 0 && (
-                            <div className="mt-8 pt-6 border-t border-gray-100">
-                                <div className="flex items-center gap-2 mb-3 text-gray-500 text-sm font-medium">
+                            <div className="mt-8 pt-6 border-t border-base-200">
+                                <div className="flex items-center gap-2 mb-3 text-base-content/50 text-sm font-medium">
                                     <FaTag /> Related Tags
                                 </div>
                                 <div className="flex flex-wrap gap-2">
                                     {tags.map((tag, i) => (
-                                        <span key={i} className="badge badge-ghost bg-gray-100 text-gray-600 px-3 py-3">
+                                        <span key={i} className="badge badge-ghost bg-base-200 text-base-content/70 px-3 py-3 border-none">
                                             #{tag}
                                         </span>
                                     ))}
@@ -356,41 +356,41 @@ const ServiceDetails = () => {
             {/* Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm p-4">
-                    <div className="bg-white p-6 rounded-2xl w-full max-w-md relative shadow-2xl animate-fade-in-up max-h-[90vh] overflow-y-auto">
+                    <div className="bg-base-100 p-6 rounded-2xl w-full max-w-md relative shadow-2xl animate-fade-in-up max-h-[90vh] overflow-y-auto">
                         <button
                             onClick={() => setIsModalOpen(false)}
-                            className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4 text-gray-500"
+                            className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4 text-base-content/50"
                         >
                             ✕
                         </button>
-                        <h3 className="font-bold text-2xl mb-6 text-gray-800 border-b pb-4">Confirm Booking</h3>
+                        <h3 className="font-bold text-2xl mb-6 text-base-content border-b border-base-200 pb-4">Confirm Booking</h3>
                         <form onSubmit={handleBookingSubmit} className="space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="label-text font-medium">Service Name</span>
+                                        <span className="label-text font-medium text-base-content/70">Service Name</span>
                                     </label>
-                                    <input type="text" value={title} disabled className="input input-bordered bg-gray-50 font-semibold text-gray-700" />
+                                    <input type="text" value={title} disabled className="input input-bordered bg-base-200 font-semibold text-base-content/80" />
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="label-text font-medium">Price</span>
+                                        <span className="label-text font-medium text-base-content/70">Price</span>
                                     </label>
-                                    <input type="text" value={`$${price}`} disabled className="input input-bordered bg-gray-50 font-bold text-primary" />
+                                    <input type="text" value={`$${price}`} disabled className="input input-bordered bg-base-200 font-bold text-primary" />
                                 </div>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="label-text font-medium">User</span>
+                                        <span className="label-text font-medium text-base-content/70">User</span>
                                     </label>
-                                    <input type="text" value={user?.displayName || 'User'} disabled className="input input-bordered bg-gray-50" />
+                                    <input type="text" value={user?.displayName || 'User'} disabled className="input input-bordered bg-base-200 text-base-content/60" />
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="label-text font-medium">Email</span>
+                                        <span className="label-text font-medium text-base-content/70">Email</span>
                                     </label>
-                                    <input type="email" value={user?.email || ''} disabled className="input input-bordered bg-gray-50" />
+                                    <input type="email" value={user?.email || ''} disabled className="input input-bordered bg-base-200 text-base-content/60" />
                                 </div>
                             </div>
 
@@ -477,10 +477,10 @@ const ServiceDetails = () => {
                             </div>
 
                             {/* Final Price Summary */}
-                            <div className="flex justify-between items-center text-lg font-bold border-t pt-2">
+                            <div className="flex justify-between items-center text-lg font-bold border-t border-base-200 pt-2">
                                 <span>Total:</span>
                                 <div>
-                                    {isCouponApplied && <span className="text-gray-400 line-through text-sm mr-2">${calculateTotal().toFixed(2)}</span>}
+                                    {isCouponApplied && <span className="text-base-content/40 line-through text-sm mr-2">${calculateTotal().toFixed(2)}</span>}
                                     <span className="text-primary">${calculateDiscountedTotal().toFixed(2)}</span>
                                 </div>
                             </div>
@@ -496,13 +496,13 @@ const ServiceDetails = () => {
 
             {/* Reviews Section */}
             <div className="mt-16 bg-base-100 p-6 rounded-xl shadow-sm border border-base-200">
-                <h3 className="text-2xl font-bold mb-6">Customer Reviews</h3>
+                <h3 className="text-2xl font-bold mb-6 text-base-content">Customer Reviews</h3>
                 {isReviewsLoading ? (
                     <span className="loading loading-dots loading-md"></span>
                 ) : reviews && reviews.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {reviews.map(review => (
-                            <div key={review._id} className="p-4 border rounded-lg bg-base-50">
+                            <div key={review._id} className="p-4 border border-base-200 rounded-lg bg-base-200/50">
                                 <div className="flex items-center gap-2 mb-2">
                                     <div className="avatar placeholder">
                                         <div className="bg-neutral text-neutral-content rounded-full w-8">
@@ -510,20 +510,20 @@ const ServiceDetails = () => {
                                         </div>
                                     </div>
                                     <div>
-                                        <p className="font-bold text-sm">{review.userName}</p>
-                                        <div className="flex text-yellow-500 text-xs">
+                                        <p className="font-bold text-sm text-base-content">{review.userName}</p>
+                                        <div className="flex text-warning text-xs">
                                             {[...Array(5)].map((_, i) => (
                                                 <span key={i}>{i < review.rating ? "★" : "☆"}</span>
                                             ))}
                                         </div>
                                     </div>
                                 </div>
-                                <p className="text-gray-600 text-sm">{review.comment}</p>
+                                <p className="text-base-content/70 text-sm">{review.comment}</p>
                             </div>
                         ))}
                     </div>
                 ) : (
-                    <p className="text-gray-500 italic">No reviews yet. Be the first to book and review!</p>
+                    <p className="text-base-content/40 italic">No reviews yet. Be the first to book and review!</p>
                 )}
             </div>
         </div>

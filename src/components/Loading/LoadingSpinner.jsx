@@ -40,7 +40,7 @@ const LoadingSpinner = ({ fullScreen = true, size = 'lg', colorClass = 'text-pri
 
     // Conditional container classes based on the fullScreen prop
     const containerClasses = fullScreen
-        ? 'fixed top-0 left-0 w-full h-full flex justify-center items-center bg-gray-100/75 z-50 transition-opacity duration-300'
+        ? 'fixed top-0 left-0 w-full h-full flex justify-center items-center bg-base-200/75 z-50 transition-opacity duration-300'
         : 'flex justify-center items-center w-full h-full';
 
     return (

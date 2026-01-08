@@ -34,28 +34,28 @@ const UserProfile = () => {
     return (
         <div className="flex flex-col items-center h-full space-y-8 py-10">
             {/* Profile Card */}
-            <div className="card w-96 bg-base-100 shadow-xl border border-gray-100">
+            <div className="card w-96 bg-base-100 shadow-xl border border-base-200">
                 <figure className="px-10 pt-10">
                     <img src={user?.photoURL} alt="Profile" className="rounded-xl w-24 h-24 object-cover ring ring-primary ring-offset-2" />
                 </figure>
                 <div className="card-body items-center text-center">
-                    <h2 className="card-title font-bold text-2xl">{user?.displayName}</h2>
-                    <p className="text-gray-500">{user?.email}</p>
+                    <h2 className="card-title font-bold text-2xl text-base-content">{user?.displayName}</h2>
+                    <p className="text-base-content/60">{user?.email}</p>
                     <div className="badge badge-primary uppercase mt-2">{role}</div>
 
                     {/* Referral Section */}
                     {dbUser.referralCode && (
                         <div className="mt-6 w-full bg-base-200 p-4 rounded-lg">
-                            <p className="text-sm font-semibold mb-2">My Referral Code</p>
+                            <p className="text-sm font-semibold mb-2 text-base-content/80">My Referral Code</p>
                             <div className="flex items-center gap-2">
-                                <code className="bg-white px-3 py-2 rounded border border-gray-300 flex-1 font-mono text-lg tracking-wider">
+                                <code className="bg-base-100 px-3 py-2 rounded border border-base-300 flex-1 font-mono text-lg tracking-wider text-primary">
                                     {dbUser.referralCode}
                                 </code>
                                 <button onClick={copyToClipboard} className="btn btn-square btn-sm btn-outline">
                                     📋
                                 </button>
                             </div>
-                            <p className="text-xs text-gray-400 mt-2">Share this code to earn rewards!</p>
+                            <p className="text-xs text-base-content/40 mt-2">Share this code to earn rewards!</p>
                         </div>
                     )}
 
@@ -67,15 +67,15 @@ const UserProfile = () => {
 
             {/* Rewards Section */}
             {dbUser.referralRewards && dbUser.referralRewards.length > 0 && (
-                <div className="card w-96 bg-base-100 shadow-xl border border-gray-100">
+                <div className="card w-96 bg-base-100 shadow-xl border border-base-200">
                     <div className="card-body">
                         <h3 className="card-title text-primary">My Rewards</h3>
                         <div className="space-y-3 mt-2">
                             {dbUser.referralRewards.map((reward) => (
-                                <div key={reward.code} className="flex justify-between items-center p-3 bg-green-50 rounded-lg border border-green-100">
+                                <div key={reward.code} className="flex justify-between items-center p-3 bg-success/10 rounded-lg border border-success/20">
                                     <div>
-                                        <p className="font-bold text-green-700">{reward.discount}% OFF</p>
-                                        <p className="text-xs text-green-600">{reward.code}</p>
+                                        <p className="font-bold text-success">{reward.discount}% OFF</p>
+                                        <p className="text-xs text-success/70">{reward.code}</p>
                                     </div>
                                     <span className="badge badge-success text-white">Active</span>
                                 </div>
