@@ -17,12 +17,12 @@ const slides = [
         description: "Professional decoration services for weddings, parties, and corporate events. We bring your vision to life."
     },
     {
-        image: "https://images.unsplash.com/photo-1522673607200-1648832cee98?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        image: "https://i.ibb.co.com/nN46Q0gz/amish-thakkar-BEdx-XAi-Rf-RM-unsplash.jpg",
         title: "Premium <span class='text-primary'>Wedding</span> Decor",
         description: "Creating magical moments with elegant floral arrangements and stunning stage setups tailored to your story."
     },
     {
-        image: "https://images.unsplash.com/photo-1473186578172-c141e6798ee4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+        image: "https://i.ibb.co.com/XZcVSRGF/inside-weather-Uxqlfigh6o-E-unsplash.jpg",
         title: "Modern <span class='text-primary'>Corporate</span> Style",
         description: "Sophisticated and professional environments that reflect your brand's excellence and attention to detail."
     }
