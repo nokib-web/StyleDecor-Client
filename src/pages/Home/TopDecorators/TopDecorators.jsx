@@ -30,7 +30,7 @@ const TopDecorators = () => {
                             <figure className="px-10 pt-10">
                                 <div className="avatar">
                                     <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                        <img src={decorator.photoURL || "https://i.ibb.co/7J5s23P/user.png"} alt={decorator.name} />
+                                        <img src={decorator.photoURL || "https://img.icons8.com/ios-filled/100/4A5A4E/potted-plant.png"} alt={decorator.name} />
                                     </div>
                                 </div>
                             </figure>

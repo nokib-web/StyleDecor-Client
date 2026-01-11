@@ -24,8 +24,8 @@ const About = () => {
                 </div>
                 <div>
                     <img
-                        src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
-                        alt="Interior Design Team"
+                        src="https://images.unsplash.com/photo-1540518614846-7eded433c457?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+                        alt="Interior Design Work"
                         className="rounded-lg shadow-xl w-full object-cover h-80"
                     />
                 </div>

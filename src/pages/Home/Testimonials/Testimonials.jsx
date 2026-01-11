@@ -1,32 +1,40 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaQuoteLeft, FaStar } from 'react-icons/fa';
-
-const testimonials = [
-    {
-        name: "Sarah Jenkins",
-        role: "Event Planner",
-        content: "StyleDecor exceeded every expectation. Their attention to detail in our corporate gala was absolutely flawless. The theme was modern yet warm, exactly what we wanted.",
-        rating: 5,
-        image: "https://i.pravatar.cc/150?u=sarah"
-    },
-    {
-        name: "Michael Chen",
-        role: "Groom",
-        content: "We couldn't have asked for a better wedding decor team. They took my wife's vague ideas and turned them into a fairytale reality. Professional, punctual, and talented.",
-        rating: 5,
-        image: "https://i.pravatar.cc/150?u=michael"
-    },
-    {
-        name: "Jessica White",
-        role: "Business Owner",
-        content: "Our office grand opening was a huge success thanks to the atmosphere created by StyleDecor. Their concept design was innovative and perfectly reflected our brand.",
-        rating: 5,
-        image: "https://i.pravatar.cc/150?u=jessica"
-    }
-];
+import { useQuery } from '@tanstack/react-query';
+import useAxios from '../../../hooks/useAxios';
 
 const Testimonials = () => {
+    const axiosPublic = useAxios();
+
+    const { data: reviews = [], isLoading } = useQuery({
+        queryKey: ['featured-reviews'],
+        queryFn: async () => {
+            const res = await axiosPublic.get('/featured-reviews');
+            return res.data;
+        }
+    });
+
+    if (isLoading) return <div className="py-24 bg-base-100 flex items-center justify-center">
+        <span className="loading loading-spinner loading-lg text-primary"></span>
+    </div>;
+
+    // Fallback if no reviews yet
+    const displayReviews = reviews.length > 0 ? reviews : [
+        {
+            userName: "Sarah J.",
+            comment: "StyleDecor exceeded every expectation. Their attention to detail in our corporate gala was absolutely flawless.",
+            rating: 5,
+            userPhoto: "https://ui-avatars.com/api/?name=SJ&background=4A5A4E&color=fff"
+        },
+        {
+            userName: "Michael C.",
+            comment: "We couldn't have asked for a better wedding decor team. They turned ideas into a fairytale reality.",
+            rating: 5,
+            userPhoto: "https://ui-avatars.com/api/?name=MC&background=6B3A3F&color=fff"
+        }
+    ];
+
     return (
         <section className="py-24 bg-base-100">
             <div className="max-w-7xl mx-auto px-6">
@@ -62,7 +70,7 @@ const Testimonials = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {testimonials.map((t, index) => (
+                    {displayReviews.map((t, index) => (
                         <motion.div
                             key={index}
                             initial={{ opacity: 0, y: 30 }}
@@ -74,16 +82,20 @@ const Testimonials = () => {
                             <FaQuoteLeft className="text-primary/10 text-6xl absolute top-8 left-8 group-hover:text-primary/20 transition-colors" />
                             <div className="relative z-10">
                                 <div className="flex gap-1 mb-6 text-warning">
-                                    {[...Array(t.rating)].map((_, i) => <FaStar key={i} />)}
+                                    {[...Array(t.rating || 5)].map((_, i) => <FaStar key={i} />)}
                                 </div>
                                 <p className="text-base-content/80 text-lg italic leading-relaxed mb-8">
-                                    "{t.content}"
+                                    "{t.comment}"
                                 </p>
                                 <div className="flex items-center gap-4">
-                                    <img src={t.image} alt={t.name} className="w-14 h-14 rounded-full object-cover border-2 border-primary/20" />
+                                    <img
+                                        src={t.userPhoto || `https://ui-avatars.com/api/?name=${t.userName}&background=random`}
+                                        alt={t.userName}
+                                        className="w-14 h-14 rounded-full object-cover border-2 border-primary/20"
+                                    />
                                     <div>
-                                        <h4 className="font-bold text-base-content">{t.name}</h4>
-                                        <p className="text-sm text-base-content/50">{t.role}</p>
+                                        <h4 className="font-bold text-base-content">{t.userName}</h4>
+                                        <p className="text-sm text-base-content/50">Verified Client</p>
                                     </div>
                                 </div>
                             </div>

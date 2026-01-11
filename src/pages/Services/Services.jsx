@@ -161,7 +161,7 @@ const Services = () => {
 
             {/* Loading Skeleton */}
             {isLoading && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[...Array(8)].map((_, i) => (
                   <SkeletonCard key={i} />
                 ))}
@@ -191,7 +191,7 @@ const Services = () => {
             {/* Grid */}
             {!isLoading && services.length > 0 && (
               <>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {services.map((service) => (
                     <ServiceCard
                       key={service._id}

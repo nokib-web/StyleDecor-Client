@@ -1,14 +1,46 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
-const stats = [
-    { value: "1,200+", label: "Projects Completed", suffix: "" },
-    { value: "45+", label: "Expert Decorators", suffix: "" },
-    { value: "98%", label: "Client Satisfaction", suffix: "" },
-    { value: "15+", label: "Years Experience", suffix: "" }
-];
+import { useQuery } from '@tanstack/react-query';
+import useAxios from '../../../hooks/useAxios';
 
 const Stats = () => {
+    const axiosPublic = useAxios();
+
+    const { data: statsData, isLoading } = useQuery({
+        queryKey: ['public-stats'],
+        queryFn: async () => {
+            const res = await axiosPublic.get('/public-stats');
+            return res.data;
+        }
+    });
+
+    const stats = [
+        {
+            value: statsData?.completedProjects?.toLocaleString() || "1,200",
+            label: "Projects Completed",
+            suffix: "+"
+        },
+        {
+            value: statsData?.expertDecorators || "45",
+            label: "Expert Decorators",
+            suffix: "+"
+        },
+        {
+            value: statsData?.satisfaction || "98",
+            label: "Client Satisfaction",
+            suffix: "%"
+        },
+        {
+            value: statsData?.yearsExperience || "10",
+            label: "Years Experience",
+            suffix: "+"
+        }
+    ];
+
+    if (isLoading) return <div className="py-20 bg-primary h-48 flex items-center justify-center">
+        <span className="loading loading-dots loading-lg text-white"></span>
+    </div>;
+
     return (
         <section className="py-20 bg-primary">
             <div className="max-w-7xl mx-auto px-6">
@@ -23,7 +55,7 @@ const Stats = () => {
                             className="text-center"
                         >
                             <div className="text-4xl md:text-5xl font-black text-white mb-2 tracking-tight">
-                                {stat.value}
+                                {stat.value}{stat.suffix}
                             </div>
                             <div className="text-primary-content/80 font-medium uppercase tracking-widest text-xs md:text-sm">
                                 {stat.label}

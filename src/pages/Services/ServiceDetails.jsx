@@ -355,15 +355,15 @@ const ServiceDetails = () => {
 
             {/* Modal */}
             {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm p-4">
-                    <div className="bg-base-100 p-6 rounded-2xl w-full max-w-md relative shadow-2xl animate-fade-in-up max-h-[90vh] overflow-y-auto">
+                <div className="fixed inset-0 z-[2000] flex items-start sm:items-center justify-center bg-base-300/60 backdrop-blur-md p-4 overflow-y-auto pt-20 sm:pt-4">
+                    <div className="bg-base-100 p-8 rounded-3xl w-full max-w-2xl relative shadow-2xl animate-fade-in-up my-auto border border-base-200">
                         <button
                             onClick={() => setIsModalOpen(false)}
-                            className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4 text-base-content/50"
+                            className="btn btn-sm btn-circle btn-ghost absolute right-6 top-6 text-base-content/50 hover:bg-base-200"
                         >
                             ✕
                         </button>
-                        <h3 className="font-bold text-2xl mb-6 text-base-content border-b border-base-200 pb-4">Confirm Booking</h3>
+                        <h3 className="font-bold text-3xl mb-8 text-base-content border-b border-base-200 pb-6">Confirm Booking</h3>
                         <form onSubmit={handleBookingSubmit} className="space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="form-control">
