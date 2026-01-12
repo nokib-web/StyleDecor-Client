@@ -22,7 +22,7 @@ const questions = [
         options: [
             { text: "A clean-lined, functional sofa", style: "Modern" },
             { text: "A vintage, ornate armchair", style: "Classic" },
-            { text: "A低 low-profile wooden bench", style: "Minimalist" },
+            { text: "A low-profile wooden bench", style: "Minimalist" },
             { text: "A patterned, eclectic rug", style: "Bohemian" }
         ]
     },
